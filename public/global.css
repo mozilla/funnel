@@ -1,3 +1,157 @@
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-Black.woff2") format("woff2"),
+    url("metropolis/Metropolis-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-BlackItalic.woff2") format("woff2"),
+    url("metropolis/Metropolis-BlackItalic.woff") format("woff");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-ExtraBold.woff2") format("woff2"),
+    url("metropolis/Metropolis-ExtraBold.woff") format("woff");
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-ExtraBoldItalic.woff2") format("woff2"),
+    url("metropolis/Metropolis-ExtraBoldItalic.woff") format("woff");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-Bold.woff2") format("woff2"),
+    url("metropolis/Metropolis-Bold.woff") format("woff");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-BoldItalic.woff2") format("woff2"),
+    url("metropolis/Metropolis-BoldItalic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-SemiBold.woff2") format("woff2"),
+    url("metropolis/Metropolis-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-SemiBoldItalic.woff2") format("woff2"),
+    url("metropolis/Metropolis-SemiBoldItalic.woff") format("woff");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-Medium.woff2") format("woff2"),
+    url("metropolis/Metropolis-Medium.woff") format("woff");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-MediumItalic.woff2") format("woff2"),
+    url("metropolis/Metropolis-MediumItalic.woff") format("woff");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-Regular.woff2") format("woff2"),
+    url("metropolis/Metropolis-Regular.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-RegularItalic.woff2") format("woff2"),
+    url("metropolis/Metropolis-RegularItalic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-Light.woff2") format("woff2"),
+    url("metropolis/Metropolis-Light.woff") format("woff");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-LightItalic.woff2") format("woff2"),
+    url("metropolis/Metropolis-LightItalic.woff") format("woff");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-ExtraLight.woff2") format("woff2"),
+    url("metropolis/Metropolis-ExtraLight.woff") format("woff");
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-ExtraLightItalic.woff2") format("woff2"),
+    url("metropolis/Metropolis-ExtraLightItalic.woff") format("woff");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-Thin.woff2") format("woff2"),
+    url("metropolis/Metropolis-Thin.woff") format("woff");
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("metropolis/Metropolis-ThinItalic.woff2") format("woff2"),
+    url("metropolis/Metropolis-ThinItalic.woff") format("woff");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
 html,
 body {
   position: relative;
@@ -6,11 +160,12 @@ body {
 }
 
 body {
+  background: linear-gradient(to right, hsl(217, 50%, 95%), hsl(1, 50%, 95%));
   color: #333;
   margin: 0;
-  padding: 8px;
   box-sizing: border-box;
-
+  display: grid;
+  grid-template-rows: max-content auto max-content;
   /**
    * This font-family stack is meant to match that of create-react-app.
    *
@@ -86,4 +241,65 @@ button:not(:disabled):active {
 
 button:focus {
   border-color: #666;
+}
+
+body > header {
+  display: grid;
+  min-height: 2rem;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  grid-template-columns: max-content auto;
+}
+
+header > h1 {
+  font-family: "Metropolis";
+  font-size: 1.5rem;
+  /* font-weight: normal; */
+  margin: 0px;
+  font-weight: normal;
+  /* text-transform: uppercase; */
+}
+
+header > h1 > span {
+  font-weight: bold;
+  transform: translateX(-0.3em);
+}
+
+main {
+  /* width: 100vw; */
+  margin: auto;
+  min-width: 1200px;
+}
+
+.billboard {
+  /* background-color: hsl(260, 50%, 85%); */
+  width: max-content;
+  margin: auto;
+  padding-bottom: 4rem;
+  padding-top: 4rem;
+}
+
+.billboard div {
+  font-size: 1.5rem;
+  max-width: 600px;
+  color: hsl(1, 0%, 35%);
+}
+
+.centered {
+  margin: auto;
+  width: max-content;
+}
+
+.gafc {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 0.5rem;
+  align-items: center;
+}
+
+main h1 {
+  text-align: center;
+  font-family: "Metropolis";
+  font-size: 4rem;
+  margin: 0px;
 }
