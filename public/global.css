@@ -160,7 +160,6 @@ body {
 }
 
 body {
-  background: linear-gradient(to right, hsl(217, 50%, 95%), hsl(1, 50%, 95%));
   color: #333;
   margin: 0;
   box-sizing: border-box;
