@@ -17,6 +17,9 @@
     "@babel/core": "7.11.0",
     "@babel/plugin-transform-runtime": "7.11.0",
     "@babel/preset-env": "7.11.0",
+    "@graph-paper/datagraphic": "0.0.0-alpha.15",
+    "@graph-paper/elements": "0.0.0-alpha.15",
+    "@graph-paper/guides": "0.0.0-alpha.15",
     "@rollup/plugin-commonjs": "14.0.0",
     "@rollup/plugin-node-resolve": "8.4.0",
     "@storybook/addon-knobs": "5.3.19",
@@ -48,6 +51,8 @@
     "svelte-loader": "2.13.6"
   },
   "dependencies": {
+    "d3-dsv": "^2.0.0",
+    "lodash": "^4.17.20",
     "sirv-cli": "1.0.5"
   }
 }

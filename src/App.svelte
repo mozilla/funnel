@@ -1,7 +1,11 @@
 <script>
   import { fields } from "./config";
+  import DetailGraph from "./components/DetailGraph.svelte";
   import Sankey from "./components/Sankey.svelte";
+  import Sankey2 from "./components/Sankey2.svelte";
 
+  const data = undefined;
+  /*
   const data = [
     {
       [fields.FROM]: "Mozilla.org Sessions",
@@ -51,6 +55,7 @@
       [fields.BOUNCE]: true,
     },
   ];
+  */
 </script>
 
 <header>
@@ -68,8 +73,16 @@
     </div>
   </div>
   <div class="centered">
-    <h2>How do we acquire users?</h2>
-    <Sankey {data} />
+    {#if data}
+      <h2>How do we acquire users?</h2>
+      <Sankey {data} />
+    {:else}Waiting for datas...{/if}
+  </div>
+  <div class="centered">
+    <Sankey2 />
+  </div>
+  <div class="centered">
+    <DetailGraph />
   </div>
 </main>
 <footer>Made by Mozilla Data.</footer>
