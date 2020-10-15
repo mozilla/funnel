@@ -3,59 +3,12 @@
   import DetailGraph from "./components/DetailGraph.svelte";
   import Sankey from "./components/Sankey.svelte";
   import Sankey2 from "./components/Sankey2.svelte";
+  import { fetchQueries } from "./state/queries";
 
-  const data = undefined;
-  /*
-  const data = [
-    {
-      [fields.FROM]: "Mozilla.org Sessions",
-      [fields.TO]: "Firefox Downloads",
-      [fields.VALUE]: 60,
-    }, // 100 here
-
-    {
-      [fields.FROM]: "Firefox Downloads",
-      [fields.TO]: "Firefox Installs",
-      [fields.VALUE]: 40,
-    }, // 60 here
-
-    {
-      [fields.FROM]: "Firefox Installs",
-      [fields.TO]: "First Runs",
-      [fields.VALUE]: 20,
-    },
-    {
-      [fields.FROM]: "First Runs",
-      [fields.TO]: "Activations",
-      [fields.VALUE]: 12,
-    },
-    // all bounced nodes should be at the end of the list.
-    {
-      [fields.FROM]: "First Runs",
-      [fields.TO]: "BOUNCE",
-      [fields.VALUE]: 8,
-      [fields.BOUNCE]: true,
-    },
-    {
-      [fields.FROM]: "Mozilla.org Sessions",
-      [fields.TO]: "BOUNCE",
-      [fields.VALUE]: 40,
-      [fields.BOUNCE]: true,
-    },
-    {
-      [fields.FROM]: "Firefox Installs",
-      [fields.TO]: "BOUNCE",
-      [fields.VALUE]: 20,
-      [fields.BOUNCE]: true,
-    },
-    {
-      [fields.FROM]: "Firefox Downloads",
-      [fields.TO]: "BOUNCE",
-      [fields.VALUE]: 20,
-      [fields.BOUNCE]: true,
-    },
-  ];
-  */
+  let data = undefined;
+  fetchQueries().then(rs => {
+    data = rs;
+  });
 </script>
 
 <header>
@@ -72,17 +25,15 @@
       Product and vetted by Data Science, these numbers are insert copy here.
     </div>
   </div>
-  <div class="centered">
-    {#if data}
-      <h2>How do we acquire users?</h2>
-      <Sankey {data} />
-    {:else}Waiting for datas...{/if}
-  </div>
-  <div class="centered">
-    <Sankey2 />
-  </div>
-  <div class="centered">
-    <DetailGraph />
-  </div>
+  {#if data}
+    <div class="centered">
+      <Sankey2 {data} />
+
+    </div>
+    <div class="centered">
+      <DetailGraph {data} />
+    </div>
+  {:else}Waiting for datas...{/if}
+
 </main>
 <footer>Made by Mozilla Data.</footer>
