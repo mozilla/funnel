@@ -4,7 +4,7 @@
   import {
     sankey as generateSankey,
     sankeyLinkHorizontal as embedding,
-    sankeyLeft as nodeAlign
+    sankeyLeft as nodeAlign,
   } from "d3-sankey";
   import { sum, sortBy, zipWith } from "lodash";
   import { fade, fly } from "svelte/transition";
@@ -12,6 +12,7 @@
   const count = format(",");
 
   export let data;
+  export let dateFilter;
   export let width = 1000;
   export let height = 400;
   export let left = 0;
@@ -19,101 +20,120 @@
   export let top = 0;
   export let bottom = 0;
 
-  function sumColumn(data, valColName) {
-    return sum(data.map(ni => ni[valColName]));
+  function sumColumn(data, valColName, dateFilter) {
+    let filteredData = dateFilter
+      ? data.filter(
+          (d) =>
+            d.date.getUTCFullYear() === dateFilter.getUTCFullYear() &&
+            d.date.getUTCMonth() === dateFilter.getUTCMonth() &&
+            d.date.getUTCDate() === dateFilter.getUTCDate()
+        )
+      : data;
+    // weird edge case where we're outside the range in the graph
+    if (filteredData.length === 0) {
+      filteredData = data;
+    }
+    console.log(filteredData);
+    return sum(filteredData.map((ni) => ni[valColName]));
   }
 
-  const summary = {
-    nonFirefoxSessions: sumColumn(data, "nonFxSessions"),
-    downloads: sumColumn(data, "nonFxDownloads"),
-    newInstalls: sumColumn(data, "successful_new_installs"),
-    paveovers: sumColumn(data, "successful_paveovers"),
-    newProfiles: sumColumn(data, "new_profiles"),
-    profileActivated: sumColumn(data, "num_activated")
-  };
-  summary.didntDownload = summary.nonFirefoxSessions - summary.downloads;
-  summary.didntInstall =
-    summary.downloads - summary.newInstalls - summary.paveovers;
-  summary.noNewProfile = summary.newInstalls - summary.newProfiles;
-  summary.notActivated = summary.newProfiles - summary.profileActivated;
+  let sankey = undefined;
 
-  const nodes = [
-    {
-      id: "nonFirefoxSessions",
-      fixedValue: summary.nonFirefoxSessions,
-      name: "Sessions"
-    },
-    { id: "downloads", name: "Firefox Downloads" },
-    { id: "newInstalls", name: "New Installs" },
-    { id: "newProfiles", name: "New Profiles" },
-    { id: "profileActivated", name: "Activated Profiles" },
-    { id: "paveovers", name: "Paveovers" },
-    { id: "didntDownload", name: "Didn't Download", bounce: true },
-    { id: "didntInstall", name: "Didn't install", bounce: true },
-    { id: "noNewProfile", name: "No new profile", bounce: true },
-    { id: "notActivated", name: "Didn't activate", bounce: true }
-  ];
-  const links = [
-    {
-      source: "nonFirefoxSessions",
-      target: "downloads",
-      value: summary.downloads
-    },
-    {
-      source: "nonFirefoxSessions",
-      target: "didntDownload",
-      value: summary.didntDownload,
-      bounced: true
-    },
-    {
-      source: "downloads",
-      target: "newInstalls",
-      value: summary.newInstalls
-    },
-    {
-      source: "downloads",
-      target: "paveovers",
-      value: summary.paveovers
-    },
-    {
-      source: "downloads",
-      target: "didntInstall",
-      value: summary.didntInstall,
-      bounced: true
-    },
-    {
-      source: "newInstalls",
-      target: "newProfiles",
-      value: summary.newProfiles
-    },
-    {
-      source: "newInstalls",
-      target: "noNewProfile",
-      value: summary.noNewProfile,
-      bounced: true
-    },
-    {
-      source: "newProfiles",
-      target: "profileActivated",
-      value: summary.profileActivated
-    },
-    {
-      source: "newProfiles",
-      target: "notActivated",
-      value: summary.notActivated,
-      bounced: true
-    }
-  ];
+  $: {
+    const summary = {
+      nonFirefoxSessions: sumColumn(data, "nonFxSessions", dateFilter),
+      downloads: sumColumn(data, "nonFxDownloads", dateFilter),
+      newInstalls: sumColumn(data, "successful_new_installs", dateFilter),
+      paveovers: sumColumn(data, "successful_paveovers", dateFilter),
+      newProfiles: sumColumn(data, "new_profiles", dateFilter),
+      profileActivated: sumColumn(data, "num_activated", dateFilter),
+    };
+    summary.didntDownload = summary.nonFirefoxSessions - summary.downloads;
+    summary.didntInstall =
+      summary.downloads - summary.newInstalls - summary.paveovers;
+    summary.noNewProfile = summary.newInstalls - summary.newProfiles;
+    summary.notActivated = summary.newProfiles - summary.profileActivated;
+    const nodes = [
+      {
+        id: "nonFirefoxSessions",
+        fixedValue: summary.nonFirefoxSessions,
+        name: "Sessions",
+      },
+      { id: "downloads", name: "Firefox Downloads" },
+      { id: "newInstalls", name: "New Installs" },
+      { id: "newProfiles", name: "New Profiles" },
+      { id: "profileActivated", name: "Activated Profiles" },
+      { id: "paveovers", name: "Paveovers" },
+      { id: "didntDownload", name: "Didn't Download", bounce: true },
+      { id: "didntInstall", name: "Didn't install", bounce: true },
+      { id: "noNewProfile", name: "No new profile", bounce: true },
+      { id: "notActivated", name: "Didn't activate", bounce: true },
+    ];
+    const links = [
+      {
+        source: "nonFirefoxSessions",
+        target: "downloads",
+        value: summary.downloads,
+      },
+      {
+        source: "nonFirefoxSessions",
+        target: "didntDownload",
+        value: summary.didntDownload,
+        bounced: true,
+      },
+      {
+        source: "downloads",
+        target: "newInstalls",
+        value: summary.newInstalls,
+      },
+      {
+        source: "downloads",
+        target: "paveovers",
+        value: summary.paveovers,
+      },
+      {
+        source: "downloads",
+        target: "didntInstall",
+        value: summary.didntInstall,
+        bounced: true,
+      },
+      {
+        source: "newInstalls",
+        target: "newProfiles",
+        value: summary.newProfiles,
+      },
+      {
+        source: "newInstalls",
+        target: "noNewProfile",
+        value: summary.noNewProfile,
+        bounced: true,
+      },
+      {
+        source: "newProfiles",
+        target: "profileActivated",
+        value: summary.profileActivated,
+      },
+      {
+        source: "newProfiles",
+        target: "notActivated",
+        value: summary.notActivated,
+        bounced: true,
+      },
+    ];
 
-  const sankey = generateSankey()
-    .nodeId(d => d.id)
-    .extent([[left, top], [width - right, height - bottom]])
-    .nodeWidth(120)
-    .nodeAlign(nodeAlign)
-    .nodePadding(4)({
-    nodes,
-    links
-  });
+    sankey = generateSankey()
+      .nodeId((d) => d.id)
+      .extent([
+        [left, top],
+        [width - right, height - bottom],
+      ])
+      .nodeWidth(120)
+      .nodeAlign(nodeAlign)
+      .nodePadding(4)({
+      nodes,
+      links,
+    });
+  }
 </script>
 
 <style>

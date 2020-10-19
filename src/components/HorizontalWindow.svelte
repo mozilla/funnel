@@ -14,25 +14,25 @@
       data: d,
       key,
       lowestValue: dom[0],
-      highestValue: dom[1]
+      highestValue: dom[1],
     });
     if (w.current) return w.current;
     return 0;
   };
   //  !== undefined ? value : defaultValue(d.data)[d.x] || $x.domain()[1]
-  $: datapoint = datasets.map(d => ({
+  $: datapoint = datasets.map((d) => ({
     match: get(d.data, value, d.x, $x.domain()),
-    ...d
+    ...d,
   }));
 
   $: output = (value
     ? datapoint
-    : datasets.map(di => ({ ...di, match: di.data.slice(-1)[0] }))
+    : datasets.map((di) => ({ ...di, match: di.data.slice(-1)[0] }))
   ) // default value
-    .map(o => ({
+    .map((o) => ({
       ...o,
       x: o.match[o.x],
-      y: o.match[o.y]
+      y: o.match[o.y],
     }));
 </script>
 

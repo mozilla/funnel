@@ -6,7 +6,7 @@
 
   export let point = [];
 
-  export let formatValue = v => v;
+  export let formatValue = (v) => v;
   export let xOffset = 0;
   export let fontSize = 14;
   export let xBuffer = 8;
@@ -26,11 +26,11 @@
   function toLocations(pt, xs, ys, left, right, top, bottom) {
     // this is where the boundary condition lives.
     let locations = [
-      ...pt.map(p => ({
+      ...pt.map((p) => ({
         ...p,
         xRange: Math.max(left, xs(p.x)),
-        yRange: ys(p.y)
-      }))
+        yRange: ys(p.y),
+      })),
     ];
     // sort order makes all the difference here
     locations.sort((a, b) => {
@@ -123,7 +123,7 @@
   $: if (container && locations && $xScale && $yScale) {
     labelWidth = Math.max(
       ...Array.from(container.querySelectorAll(".widths")).map(
-        q => q.getBoundingClientRect().width
+        (q) => q.getBoundingClientRect().width
       )
     );
     if (!Number.isFinite(labelWidth)) {

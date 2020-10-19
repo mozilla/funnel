@@ -2,12 +2,12 @@
   import { onMount } from "svelte";
   import { fade, fly } from "svelte/transition";
   import {
-  sankey as generateSankey,
-  sankeyLinkHorizontal as embedding,
-  sankeyJustify as nodeAlign
-} from "d3-sankey";
-import { format } from "d3-format";
-import { fields } from "../config";
+    sankey as generateSankey,
+    sankeyLinkHorizontal as embedding,
+    sankeyJustify as nodeAlign,
+  } from "d3-sankey";
+  import { format } from "d3-format";
+  import { fields } from "../config";
 
   const count = format(",");
 
@@ -21,23 +21,26 @@ import { fields } from "../config";
 
   // get nodes
   $: nodes = Array.from(
-    new Set(data.map(di => [di[fields.FROM], di[fields.TO]]).flat())
-  ).map(node => ({ name: node }));
+    new Set(data.map((di) => [di[fields.FROM], di[fields.TO]]).flat())
+  ).map((node) => ({ name: node }));
 
-  $: links = data.map(di => {
+  $: links = data.map((di) => {
     const l = { ...di };
-    l.source = nodes.findIndex(n => n.name === di[fields.FROM]);
-    l.target = nodes.findIndex(n => n.name === di[fields.TO]);
+    l.source = nodes.findIndex((n) => n.name === di[fields.FROM]);
+    l.target = nodes.findIndex((n) => n.name === di[fields.TO]);
     return l;
   });
 
   $: output = generateSankey()
-    .extent([[left, top], [width - right, height - bottom]])
+    .extent([
+      [left, top],
+      [width - right, height - bottom],
+    ])
     .nodeWidth(10)
     .nodeAlign(nodeAlign)
     .nodePadding(4)({
     nodes,
-    links
+    links,
   });
 
   let mounted = false;
