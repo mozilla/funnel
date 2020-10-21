@@ -1,7 +1,7 @@
 <script>
   import { fields } from "./config";
   import DetailGraph from "./components/DetailGraph.svelte";
-  import Sankey from "./components/Sankey.svelte";
+  import ExecutiveSummary from "./components/ExecutiveSummary.svelte";
   import Sankey2 from "./components/Sankey2.svelte";
   import { fetchQueries } from "./state/queries";
 
@@ -23,35 +23,32 @@
 </style>
 
 <header>
-  <h1 class="gafc">
-    data.
-    <span>mozilla</span>
-  </h1>
+  <h1 class="gafc">Numbers That Matter</h1>
 </header>
 <main>
-  <div class="warning">
-    This data and visualization is
-    <b>NOT</b>
-    validated. Please do not make any decisions based on it!!
-  </div>
-  <div class="billboard">
-    <h1>Numbers That Matter</h1>
-    <div>
-      Get acquainted with Mozilla's important product numbers. Selected by
-      Product and vetted by Data Science, these numbers are insert copy here.
+  <div class="surface surface--border-radius--1" style="height:100%">
+    <div class="content-block--padding--8 content-block">
+      <div class="warning">
+        The data behind this visualization is
+        <b>NOT</b>
+        validated. Do
+        <b>not</b>
+        make any judgements or decisions based on it!!
+      </div>
+      <h3>Executive Summary</h3>
+      {#if data}
+        <ExecutiveSummary {data} />
+      {/if}
+      <h3>Funnel Analysis</h3>
+      {#if data}
+        <div class="centered content-element">
+          <DetailGraph {data} {dateHover} />
+        </div>
+        <div class="centered content-element">
+          <Sankey2 {data} {dateFilter} />
+        </div>
+      {:else}Waiting for datas...{/if}
     </div>
   </div>
-  <div class="centered">
-    <h2>Funnel Metrics</h2>
-  </div>
-  {#if data}
-    <div class="centered content-element">
-      <DetailGraph {data} {dateHover} />
-    </div>
-    <div class="centered content-element">
-      <Sankey2 {data} {dateFilter} />
-    </div>
-  {:else}Waiting for datas...{/if}
-
 </main>
 <footer>Made by Mozilla Data.</footer>

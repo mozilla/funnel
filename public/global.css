@@ -189,6 +189,26 @@ body {
     "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
 }
+:root {
+  --brand-font: "Metropolis";
+  --main-text-font: "Inter var";
+  --main-mono-font: "Fira Code";
+  --root-font-size: 1em;
+}
+
+body {
+  background: linear-gradient(
+    to bottom,
+    white,
+    var(--cool-gray-subtle) var(--space-48x),
+    var(--cool-gray-100) var(--space-96x)
+  );
+  background-attachment: fixed;
+}
+
+main {
+  background-color: var(--bg-gray-01);
+}
 
 a {
   color: rgb(0, 100, 200);
@@ -301,9 +321,132 @@ main {
   align-items: center;
 }
 
+/* surfaces are the main thing */
+/* needs depth and roundedness as the main concerns */
+
+.surface {
+  background-color: white;
+}
+.surface--depth--none {
+  box-shadow: none;
+}
+.surface--depth--tiny {
+  box-shadow: var(--depth-tiny);
+}
+.surface--depth--small {
+  box-shadow: var(--depth-small);
+}
+.surface--depth--medium {
+  box-shadow: var(--depth-medium);
+}
+.surface--depth--large {
+  box-shadow: var(--depth-large);
+}
+.surface--depth--jumbo {
+  box-shadow: var(--depth-jumbo);
+}
+
+.surface--border-radius--1q {
+  border-radius: var(--space-1q);
+}
+.surface--border-radius--1h {
+  border-radius: var(--space-1h);
+}
+.surface--border-radius--1 {
+  border-radius: var(--space-base);
+}
+
+.content-block {
+  padding: var(--space-2x);
+}
+.content-block--padding--1q {
+  padding: var(--space-1q);
+}
+.content-block--padding--1h {
+  padding: var(--space-1h);
+}
+.content-block--padding--1 {
+  padding: var(--space-1);
+}
+.content-block--padding--2 {
+  padding: var(--space-2x);
+}
+.content-block--padding--4 {
+  padding: var(--space-4x);
+}
+.content-block--padding--8 {
+  padding: var(--space-8x);
+}
+
 main h1 {
   text-align: center;
   font-family: "Metropolis";
   font-size: 4rem;
   margin: 0px;
+}
+
+h2 {
+  position: sticky;
+  top: 0;
+  padding-top: var(--space-2x);
+  padding-bottom: var(--space-2x);
+  background-color: white;
+  margin-left: calc(var(--space-4x) * -1);
+  padding-left: var(--space-4x);
+  padding-right: var(--space-2x);
+  border-bottom: 2px solid var(--cool-gray-150);
+}
+
+/* use h3 for subsection headers */
+h3 {
+  font-size: var(--text-06);
+  color: var(--cool-gray-650);
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+/* use h4 for chart titles */
+h4 {
+  margin: 0;
+}
+
+.topline-numbers {
+  display: grid;
+  grid-column-gap: var(--space-8x);
+  grid-row-gap: var(--space-8x);
+  /* grid-template-columns: 1fr 1fr 1fr;
+  justify-items: end;
+  justify-content: stretch; */
+  grid-template-columns: repeat(3, auto);
+  justify-items: end;
+  justify-content: center;
+  /* width: 950px; */
+  /* width: 100%; */
+  margin-left: var(--space-4x);
+  margin-right: var(--space-4x);
+  /* outline: 1px solid black; */
+  /* margin: auto; */
+}
+
+.big-number {
+  font-size: var(--text-04);
+  width: max-content;
+  text-align: right;
+}
+
+.big-number--sublabel {
+  font-size: var(--text-02);
+  text-transform: uppercase;
+  color: var(--cool-gray-600);
+}
+.big-number--label {
+  font-weight: 600;
+  color: var(--cool-gray-750);
+}
+.big-number--number {
+  text-align: right;
+  font-size: var(--text-08);
+  font-weight: 300;
+  color: var(--cool-gray-600);
+  font-family: var(--main-mono-font);
 }

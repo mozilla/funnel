@@ -8,12 +8,13 @@
   } from "d3-sankey";
   import { sum, sortBy, zipWith } from "lodash";
   import { fade, fly } from "svelte/transition";
+  import { colorKey } from "./ColorKey";
 
   const count = format(",");
 
   export let data;
   export let dateFilter;
-  export let width = 1000;
+  export let width = 900;
   export let height = 400;
   export let left = 0;
   export let right = 0;
@@ -58,12 +59,23 @@
         id: "nonFirefoxSessions",
         fixedValue: summary.nonFirefoxSessions,
         name: "Sessions",
+        color: colorKey.sessions,
       },
-      { id: "downloads", name: "Firefox Downloads" },
-      { id: "newInstalls", name: "New Installs" },
-      { id: "newProfiles", name: "New Profiles" },
-      { id: "profileActivated", name: "Activated Profiles" },
-      { id: "paveovers", name: "Paveovers" },
+      { id: "downloads", name: "Firefox Downloads", color: colorKey.downloads },
+      { id: "newInstalls", name: "New Installs", color: colorKey.installs },
+      {
+        id: "newProfiles",
+        name: "New Profiles",
+        color: colorKey.profiles,
+        textColor: "#444",
+      },
+      {
+        id: "profileActivated",
+        name: "Activated Profiles",
+        color: colorKey.activations,
+        textColor: "#444",
+      },
+      { id: "paveovers", name: "Paveovers", bounce: true },
       { id: "didntDownload", name: "Didn't Download", bounce: true },
       { id: "didntInstall", name: "Didn't install", bounce: true },
       { id: "noNewProfile", name: "No new profile", bounce: true },
@@ -90,6 +102,7 @@
         source: "downloads",
         target: "paveovers",
         value: summary.paveovers,
+        bounced: true,
       },
       {
         source: "downloads",
@@ -144,7 +157,7 @@
 </style>
 
 {#if sankey}
-  <svg in:fly={{ duration: 500, y: -10 }} width="1000" height="400">
+  <svg in:fly={{ duration: 500, y: -10 }} width="900" height="400">
     {#each sankey.links as link}
       <path
         in:fade={{ duration: 500 }}
@@ -161,12 +174,12 @@
         y={node.y0}
         height={node.y1 - node.y0}
         width={node.x1 - node.x0}
-        fill={node.bounce ? 'hsla(217, 0%, 0%, .2)' : 'hsl(217, 50%, 30%)'} />
+        fill={node.color ? node.color : node.bounce ? 'hsla(217, 0%, 0%, .2)' : 'hsl(217, 50%, 30%)'} />
       <g
         in:fly={{ duration: 500, y: 5 * (i % 2 === 0 ? -1 : -2) }}
-        fill={node.bounce ? '#444' : '#eee'}
+        fill={node.textColor ? node.textColor : node.bounce ? '#444' : '#ddd'}
         style="transform: translate({node.x0 + 4}px, {node.y0 + 10}px);">
-        <text dy=".35em" font-weight="bold" text-anchor={'start'}>
+        <text dy=".35em" font-weight="bold" color="#000" text-anchor={'start'}>
           {node.name}
         </text>
         <text

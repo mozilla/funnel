@@ -7,10 +7,11 @@
   import { Tiles } from "@graph-paper/tiles";
   import HorizontalWindow from "./HorizontalWindow.svelte";
   import MetricMouseover from "./MetricMouseover.svelte";
+  import { colorKey } from "./ColorKey";
 
   export let dateHover;
 
-  export let width = 600;
+  export let width = 500;
   export let height = 320;
   export let size = 1;
   export let curve = "curveMonotoneX";
@@ -33,35 +34,35 @@
       data,
       x: "date",
       y: "nonFxSessions",
-      color: "var(--digital-blue-500)",
+      color: colorKey.sessions,
       label: "Sessions",
     },
     {
       data,
       x: "date",
       y: "nonFxDownloads",
-      color: "var(--pantone-red-500)",
+      color: colorKey.downloads,
       label: "Downloads",
     },
     {
       data,
       x: "date",
       y: "successful_new_installs",
-      color: "var(--bright-yellow-500)",
+      color: colorKey.installs,
       label: "New Installs",
     },
     {
       data,
       x: "date",
       y: "new_profiles",
-      color: "var(--cool-gray-500)",
+      color: colorKey.profiles,
       label: "New Profiles",
     },
     {
       data,
       x: "date",
       y: "num_activated",
-      color: "var(--pond-green-500)",
+      color: colorKey.activations,
       label: "Activated Profiles",
     },
   ];
@@ -71,29 +72,29 @@
       x: "date",
       y: "y",
       data: getRateSeries(data, "nonFxSessions", "nonFxDownloads"),
-      label: "Sessions -> Downloads",
-      color: "var(--digital-blue-500)",
+      label: "Download rate",
+      color: colorKey.downloads,
     },
     {
       x: "date",
       y: "y",
-      data: getRateSeries(data, "nonFxDownloads", "successful_new_installs"),
-      label: "Downloads -> Installs",
-      color: "var(--pantone-red-500)",
+      data: getRateSeries(data, "nonFxSessions", "successful_new_installs"),
+      label: "Installation rate",
+      color: colorKey.installs,
     },
     {
       x: "date",
       y: "y",
-      data: getRateSeries(data, "successful_new_installs", "new_profiles"),
-      label: "Installs -> New Profiles",
-      color: "var(--bright-yellow-500)",
+      data: getRateSeries(data, "nonFxSessions", "new_profiles"),
+      label: "New profile rate",
+      color: colorKey.profiles,
     },
     {
       x: "date",
       y: "y",
-      data: getRateSeries(data, "new_profiles", "num_activated"),
-      label: "New Profiles -> Activated",
-      color: "var(--pond-green-500)",
+      data: getRateSeries(data, "nonFxSessions", "num_activated"),
+      label: "Activation rate",
+      color: colorKey.activations,
     },
   ];
 </script>
