@@ -3,6 +3,7 @@
   import DetailGraph from "./components/DetailGraph.svelte";
   import ExecutiveSummary from "./components/ExecutiveSummary.svelte";
   import Sankey2 from "./components/Sankey2.svelte";
+  import SubSectionHeader from "./components/SubSectionHeader.svelte";
   import { fetchQueries } from "./state/queries";
 
   let data = undefined;
@@ -22,14 +23,6 @@
     color: white;
     padding: 20px;
     text-align: center;
-  }
-
-  /* use h3 for subsection headers */
-  h3 {
-    font-size: var(--text-06);
-    color: var(--cool-gray-650);
-    font-weight: normal;
-    text-transform: uppercase;
   }
 
   /* use h4 for chart titles */
@@ -55,13 +48,18 @@
         <b>not</b>
         make any judgements or decisions based on it!!
       </div>
-      <h3>Executive Summary</h3>
-      <p class="explanatory-paragraph">From July 1st to October 10th 2020</p>
-
+      <SubSectionHeader
+        docs={'https://docs.google.com/document/d/1fvd8J-WJODuSlQB8lZAsmeTwcJjHA40G-bNXQeFOy-I/edit#heading=h.xetti09v4gs'}>
+        Executive Summary
+      </SubSectionHeader>
       {#if data}
+        <p class="explanatory-paragraph">From July 1st to October 10th 2020</p>
         <ExecutiveSummary {data} />
       {/if}
-      <h3>Funnel Analysis</h3>
+      <SubSectionHeader
+        docs={'https://docs.google.com/document/d/1fvd8J-WJODuSlQB8lZAsmeTwcJjHA40G-bNXQeFOy-I/edit#heading=h.4pmddu15w2p8'}>
+        Funnel Analysis
+      </SubSectionHeader>
       {#if data}
         <div class="centered content-element">
           <DetailGraph {data} {dateHover} />
@@ -69,7 +67,7 @@
         <div class="centered content-element">
           <Sankey2 {data} {dateFilter} />
         </div>
-      {:else}Waiting for datas...{/if}
+      {/if}
     </div>
   </div>
 </main>

@@ -52,6 +52,8 @@
     "svelte-loader": "2.13.6"
   },
   "dependencies": {
+    "@graph-paper/button": "0.0.0-alpha.15",
+    "@graph-paper/icons": "0.0.0-alpha.15",
     "@graph-paper/tiles": "0.0.0-alpha.15",
     "d3-dsv": "^2.0.0",
     "lodash": "^4.17.20",
