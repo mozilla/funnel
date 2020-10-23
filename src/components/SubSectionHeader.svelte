@@ -1,9 +1,3 @@
-<script>
-  import Button from "@graph-paper/button/Button.svelte";
-  import Documentation from "@graph-paper/icons/Documentation.svelte";
-  export let docs;
-</script>
-
 <style>
   .subsection-header {
     display: grid;
@@ -22,15 +16,4 @@
   <h3>
     <slot />
   </h3>
-  {#if docs}
-    <div>
-      <Button
-        on:click={() => {
-          window.open(docs, '_blank');
-        }}>
-        <Documentation size={16} />
-        About this section
-      </Button>
-    </div>
-  {/if}
 </div>

@@ -314,13 +314,6 @@ main {
   padding-bottom: 20px;
 }
 
-.gafc {
-  display: grid;
-  grid-auto-flow: column;
-  grid-column-gap: 0.5rem;
-  align-items: center;
-}
-
 /* surfaces are the main thing */
 /* needs depth and roundedness as the main concerns */
 

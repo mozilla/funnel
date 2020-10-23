@@ -3,6 +3,7 @@
   import DetailGraph from "./components/DetailGraph.svelte";
   import ExecutiveSummary from "./components/ExecutiveSummary.svelte";
   import Sankey2 from "./components/Sankey2.svelte";
+  import SiteHeader from "./components/SiteHeader.svelte";
   import SubSectionHeader from "./components/SubSectionHeader.svelte";
   import { fetchQueries } from "./state/queries";
 
@@ -35,9 +36,7 @@
   }
 </style>
 
-<header>
-  <h1 class="gafc">Numbers That Matter</h1>
-</header>
+<SiteHeader />
 <main>
   <div class="surface surface--border-radius--1" style="height:100%">
     <div class="content-block--padding--8 content-block">
@@ -48,18 +47,12 @@
         <b>not</b>
         make any judgements or decisions based on it!!
       </div>
-      <SubSectionHeader
-        docs={'https://docs.google.com/document/d/1fvd8J-WJODuSlQB8lZAsmeTwcJjHA40G-bNXQeFOy-I/edit#heading=h.xetti09v4gs'}>
-        Executive Summary
-      </SubSectionHeader>
+      <SubSectionHeader>The Firefox Acquisition Journey</SubSectionHeader>
       {#if data}
         <p class="explanatory-paragraph">From July 1st to October 10th 2020</p>
         <ExecutiveSummary {data} />
       {/if}
-      <SubSectionHeader
-        docs={'https://docs.google.com/document/d/1fvd8J-WJODuSlQB8lZAsmeTwcJjHA40G-bNXQeFOy-I/edit#heading=h.4pmddu15w2p8'}>
-        Funnel Analysis
-      </SubSectionHeader>
+      <SubSectionHeader>Change over Time</SubSectionHeader>
       {#if data}
         <div class="centered content-element">
           <DetailGraph {data} {dateHover} />
