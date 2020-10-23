@@ -57,7 +57,7 @@
       {
         id: "nonFirefoxSessions",
         fixedValue: summary.nonFirefoxSessions,
-        name: "Sessions",
+        name: "Web Sessions",
         color: colorKey.sessions,
       },
       { id: "downloads", name: "Firefox Downloads", color: colorKey.downloads },
