@@ -34,7 +34,6 @@
     if (filteredData.length === 0) {
       filteredData = data;
     }
-    console.log(filteredData);
     return sum(filteredData.map((ni) => ni[valColName]));
   }
 
