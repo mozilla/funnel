@@ -50,6 +50,10 @@
     description={'A Firefox installer successfully completes installation on a machine where Firefox does not already exist on the target directory. Windows only (only windows sends this ping), attributed only (meaning installer was downloaded from Mozilla.org).'}
     value={summary.newInstalls} />
   <BigNumber
+    label={'Paveovers'}
+    description={'A person who downloaded Firefox from the website using a non-Firefox browser installs over an existing installation of Firefox.'}
+    value={summary.paveovers} />
+  <BigNumber
     label={'New Profiles'}
     description={'Firefox is run for the first time on a new installation of Firefox (for installs downloaded from the website on a non-Firefox browser).'}
     value={summary.newProfiles} />
