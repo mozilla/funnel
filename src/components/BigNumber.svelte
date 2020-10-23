@@ -1,8 +1,11 @@
 <script>
   import { format } from "d3-format";
+  import Help from "./Help.svelte";
+  import { tooltip } from "./tooltip";
 
   export let label;
   export let value;
+  export let description;
 </script>
 
 <style>
@@ -31,6 +34,13 @@
 </style>
 
 <div class="big-number">
-  <div class="big-number--label">{label}</div>
+  <div class="big-number--label">
+    {label}
+    {#if description}
+      <span use:tooltip={{ text: description, location: 'top' }}>
+        <Help size="16" />
+      </span>
+    {/if}
+  </div>
   <div class="big-number--number">{format(',')(value)}</div>
 </div>
