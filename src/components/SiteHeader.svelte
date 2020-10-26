@@ -2,9 +2,7 @@
   import Button from "@graph-paper/button/Button.svelte";
   import Documentation from "@graph-paper/icons/Documentation.svelte";
   import Slack from "./Slack.svelte";
-  const feedbackLink = "https://mozilla.slack.com/archives/C01B13U2CGH";
-  const docsLink =
-    "https://docs.google.com/document/d/1fvd8J-WJODuSlQB8lZAsmeTwcJjHA40G-bNXQeFOy-I/edit";
+  import { feedbackLink, docsLink } from "../links";
 </script>
 
 <style>

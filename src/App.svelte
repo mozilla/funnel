@@ -6,6 +6,7 @@
   import SiteHeader from "./components/SiteHeader.svelte";
   import SubSectionHeader from "./components/SubSectionHeader.svelte";
   import { fetchQueries } from "./state/queries";
+  import { feedbackLink } from "./links.js";
 
   let data = undefined;
   let dateFilter = undefined;
@@ -20,10 +21,12 @@
 
 <style>
   .warning {
-    background-color: #d44;
-    color: white;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    color: #856404;
     padding: 20px;
-    text-align: center;
+    border-radius: 0.25rem;
+    border: 1px solid transparent;
   }
 
   /* use h4 for chart titles */
@@ -41,11 +44,10 @@
   <div class="surface surface--border-radius--1" style="height:100%">
     <div class="content-block--padding--8 content-block">
       <div class="warning">
-        The data behind this visualization is
-        <b>NOT</b>
-        fully validated. Do
-        <b>not</b>
-        make any judgements or decisions based on it!!
+        While the data in this visualization has undergone a preliminary
+        validation, the presentation is still very much in flux.
+        <a href={feedbackLink} target="blank_">Feedback</a>
+        (and questions!) are welcome.
       </div>
       <SubSectionHeader>The Firefox Acquisition Journey</SubSectionHeader>
       {#if data}
