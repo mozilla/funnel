@@ -35,7 +35,7 @@
       x: "date",
       y: "nonFxSessions",
       color: colorKey.sessions,
-      label: "Sessions",
+      label: "Web Sessions",
     },
     {
       data,
