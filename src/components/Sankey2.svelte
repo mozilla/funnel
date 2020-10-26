@@ -155,6 +155,7 @@
   }
 </style>
 
+<h4>Funnel Overview</h4>
 {#if sankey}
   <svg in:fly={{ duration: 500, y: -10 }} width="900" height="400">
     {#each sankey.links as link}

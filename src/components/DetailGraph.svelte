@@ -4,6 +4,7 @@
   import { DataGraphic } from "@graph-paper/datagraphic";
   import { Line } from "@graph-paper/elements";
   import { MarginText, LeftAxis, BottomAxis } from "@graph-paper/guides";
+  import { Stack } from "@graph-paper/stack";
   import { Tiles } from "@graph-paper/tiles";
   import HorizontalWindow from "./HorizontalWindow.svelte";
   import MetricMouseover from "./MetricMouseover.svelte";
@@ -100,95 +101,105 @@
 </script>
 
 <Tiles>
-  <DataGraphic
-    yMin={0}
-    xType="time"
-    yType="linear"
-    left={128}
-    {width}
-    {height}
-    bind:mousePosition={mousePosition2}>
-    <LeftAxis tickFormatter={format(',.0r')} />
-    <BottomAxis />
-    {#each datasets as dataset}
-      <Line
-        {curve}
-        data={dataset.data}
-        x={dataset.x}
-        y={dataset.y}
-        color={dataset.color}
-        {size}
-        {dashArray} />
-    {/each}
-    <g slot="annotation" let:xScale let:top let:bottom>
-      <HorizontalWindow {datasets} value={mousePosition2.x} let:output>
-        {#if mousePosition2.x}
-          <text
-            x={xScale(output[0].match.date)}
-            y={top - 4}
-            font-size="12"
-            fill="var(--cool-gray-600)"
-            text-anchor="middle">
-            {timeFormat('%b %d %Y')(output[0].match.date)}
-          </text>
-          <line
-            x1={xScale(output[0].match.date)}
-            x2={xScale(output[0].match.date)}
-            y1={top}
-            y2={bottom}
-            stroke-dasharray="3,1"
-            stroke="var(--cool-gray-300)" />
-          <MetricMouseover point={output} formatValue={format(',')} />
-        {/if}
-      </HorizontalWindow>
-    </g>
-  </DataGraphic>
+  <Stack>
+    <h4>Numbers</h4>
+    <DataGraphic
+      yMin={0}
+      xType="time"
+      yType="linear"
+      left={54}
+      top={16}
+      bottom={48}
+      {width}
+      {height}
+      bind:mousePosition={mousePosition2}>
+      <LeftAxis tickFormatter={format(',.0r')} />
+      <BottomAxis />
+      {#each datasets as dataset}
+        <Line
+          {curve}
+          data={dataset.data}
+          x={dataset.x}
+          y={dataset.y}
+          color={dataset.color}
+          {size}
+          {dashArray} />
+      {/each}
+      <g slot="annotation" let:xScale let:top let:bottom>
+        <HorizontalWindow {datasets} value={mousePosition2.x} let:output>
+          {#if mousePosition2.x}
+            <text
+              x={xScale(output[0].match.date)}
+              y={top - 4}
+              font-size="12"
+              fill="var(--cool-gray-600)"
+              text-anchor="middle">
+              {timeFormat('%b %d %Y')(output[0].match.date)}
+            </text>
+            <line
+              x1={xScale(output[0].match.date)}
+              x2={xScale(output[0].match.date)}
+              y1={top}
+              y2={bottom}
+              stroke-dasharray="3,1"
+              stroke="var(--cool-gray-300)" />
+            <MetricMouseover point={output} formatValue={format(',')} />
+          {/if}
+        </HorizontalWindow>
+      </g>
+    </DataGraphic>
+  </Stack>
 
-  <DataGraphic
-    yMin={0}
-    yMax={1}
-    xType="time"
-    yType="linear"
-    left={128}
-    {width}
-    {height}
-    bind:mousePosition={mousePosition2}>
-    <LeftAxis tickFormatter={format('.0%')} />
-    <BottomAxis />
-    {#each rateDatasets as dataset}
-      <Line
-        {curve}
-        data={dataset.data}
-        x={dataset.x}
-        y={dataset.y}
-        color={dataset.color}
-        {size}
-        {dashArray} />
-    {/each}
-    <g slot="annotation" let:xScale let:top let:bottom>
-      <HorizontalWindow
-        datasets={rateDatasets}
-        value={mousePosition2.x}
-        let:output>
-        {#if mousePosition2.x}
-          <text
-            x={xScale(output[0].match.date)}
-            y={top - 4}
-            font-size="12"
-            fill="var(--cool-gray-600)"
-            text-anchor="middle">
-            {timeFormat('%b %d %Y')(output[0].match.date)}
-          </text>
-          <line
-            x1={xScale(output[0].match.date)}
-            x2={xScale(output[0].match.date)}
-            y1={top}
-            y2={bottom}
-            stroke-dasharray="3,1"
-            stroke="var(--cool-gray-300)" />
-          <MetricMouseover point={output} formatValue={format('.2%')} />
-        {/if}
-      </HorizontalWindow>
-    </g>
-  </DataGraphic>
+  <Stack>
+    <h4>Rates</h4>
+    <DataGraphic
+      yMin={0}
+      yMax={1}
+      xType="time"
+      yType="linear"
+      left={54}
+      top={16}
+      bottom={48}
+      {width}
+      {height}
+      bind:mousePosition={mousePosition2}>
+      <LeftAxis tickFormatter={format('.0%')} />
+      <BottomAxis />
+      {#each rateDatasets as dataset}
+        <Line
+          {curve}
+          data={dataset.data}
+          x={dataset.x}
+          y={dataset.y}
+          color={dataset.color}
+          {size}
+          {dashArray} />
+      {/each}
+      <g slot="annotation" let:xScale let:top let:bottom>
+        <HorizontalWindow
+          datasets={rateDatasets}
+          value={mousePosition2.x}
+          let:output>
+          {#if mousePosition2.x}
+            <text
+              x={xScale(output[0].match.date)}
+              y={top - 4}
+              font-size="12"
+              fill="var(--cool-gray-600)"
+              text-anchor="middle">
+              {timeFormat('%b %d %Y')(output[0].match.date)}
+            </text>
+            <line
+              x1={xScale(output[0].match.date)}
+              x2={xScale(output[0].match.date)}
+              y1={top}
+              y2={bottom}
+              stroke-dasharray="3,1"
+              stroke="var(--cool-gray-300)" />
+            <MetricMouseover point={output} formatValue={format('.2%')} />
+          {/if}
+        </HorizontalWindow>
+      </g>
+    </DataGraphic>
+  </Stack>
 </Tiles>
