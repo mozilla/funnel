@@ -51,12 +51,12 @@
       {#if data}
         <p class="explanatory-paragraph">From July 1st to October 10th 2020</p>
         <ExecutiveSummary {data} />
-        <SubSectionHeader>Change over Time</SubSectionHeader>
-        <div class="content-element">
-          <DetailGraph {data} {dateHover} />
-        </div>
+        <SubSectionHeader>Details</SubSectionHeader>
         <div class="content-element">
           <Sankey2 {data} {dateFilter} />
+        </div>
+        <div class="content-element">
+          <DetailGraph {data} {dateHover} />
         </div>
       {/if}
     </div>

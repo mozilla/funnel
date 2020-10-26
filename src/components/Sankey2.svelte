@@ -15,7 +15,7 @@
   export let data;
   export let dateFilter;
   export let width = 900;
-  export let height = 400;
+  export let height = 320;
   export let left = 0;
   export let right = 0;
   export let top = 0;
@@ -157,7 +157,7 @@
 
 <h4>Funnel Overview</h4>
 {#if sankey}
-  <svg in:fly={{ duration: 500, y: -10 }} width="900" height="400">
+  <svg in:fly={{ duration: 500, y: -10 }} width="900" height="320">
     {#each sankey.links as link}
       <path
         in:fade={{ duration: 500 }}
