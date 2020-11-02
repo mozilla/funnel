@@ -18,7 +18,7 @@
     grid-auto-flow: column;
   }
   h1 {
-    padding: var(--space-2x);
+    padding-top: var(--space-2x);
     padding-left: var(--space-4x);
     padding-right: var(--space-4x);
     font-size: var(--text-08);

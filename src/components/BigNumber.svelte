@@ -5,7 +5,13 @@
 
   export let label;
   export let value;
+  export let compare;
   export let description;
+
+  $: comparePct = value / compare - 1;
+  $: compareStr = `vs. ${format(",")(compare)} in previous (${
+    comparePct > 0 ? "+" : ""
+  }${format(".0%")(comparePct)})`;
 </script>
 
 <style>
@@ -31,6 +37,11 @@
     color: var(--cool-gray-600);
     font-family: var(--main-mono-font);
   }
+
+  .big-number--compare {
+    font-size: var(--text-02);
+    color: var(--cool-gray-700);
+  }
 </style>
 
 <div class="big-number">
@@ -43,4 +54,6 @@
     {/if}
   </div>
   <div class="big-number--number">{format(',')(value)}</div>
+  <div class="big-number--compare">{compareStr}</div>
+
 </div>

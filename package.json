@@ -54,6 +54,7 @@
   "dependencies": {
     "@graph-paper/button": "0.0.0-alpha.15",
     "@graph-paper/icons": "0.0.0-alpha.15",
+    "@graph-paper/optionmenu": "0.0.0-alpha.15",
     "@graph-paper/stack": "0.0.0-alpha.15",
     "@graph-paper/tiles": "0.0.0-alpha.15",
     "d3-dsv": "^2.0.0",

@@ -4,14 +4,19 @@
   import ExecutiveSummary from "./components/ExecutiveSummary.svelte";
   import Sankey2 from "./components/Sankey2.svelte";
   import SiteHeader from "./components/SiteHeader.svelte";
+  import StickyHeader from "./components/StickyHeader.svelte";
   import SubSectionHeader from "./components/SubSectionHeader.svelte";
   import { fetchQueries } from "./state/queries";
   import { feedbackLink } from "./links.js";
+  import { getSummaryDays } from "./state/summary.js";
 
-  let data = undefined;
-  let dateFilter = undefined;
+  let data;
+  let dateFilter;
+  let summary;
+  let dateRange = 30;
   fetchQueries().then((rs) => {
     data = rs;
+    summary = getSummaryDays(data, dateRange);
   });
 
   function dateHover(date) {
@@ -34,31 +39,32 @@
     margin: 0;
   }
 
-  .explanatory-paragraph {
-    margin-top: 0px;
+  .main-content-block {
+    padding-left: var(--space-8x);
+    padding-right: var(--space-8x);
   }
 </style>
 
 <SiteHeader />
 <main>
   <div class="surface surface--border-radius--1" style="height:100%">
-    <div class="content-block--padding--8 content-block">
-      <div class="warning">
-        While the data in this visualization has undergone a preliminary
-        validation, the presentation is still very much in flux.
-        <a href={feedbackLink} target="blank_">Feedback</a>
-        (and questions!) are welcome.
-      </div>
-      <SubSectionHeader>The Firefox Acquisition Journey</SubSectionHeader>
+    <div class="main-content-block content-block">
       {#if data}
-        <p class="explanatory-paragraph">From July 1st to October 10th 2020</p>
-        <ExecutiveSummary {data} />
+        <StickyHeader {summary} />
+        <div class="warning">
+          While the data in this visualization has undergone a preliminary
+          validation, the presentation is still very much in flux.
+          <a href={feedbackLink} target="blank_">Feedback</a>
+          (and questions!) are welcome.
+        </div>
+        <SubSectionHeader>The Firefox Acquisition Journey</SubSectionHeader>
+        <ExecutiveSummary {summary} />
         <SubSectionHeader>Details</SubSectionHeader>
         <div class="content-element">
-          <Sankey2 {data} {dateFilter} />
+          <Sankey2 {summary} {data} {dateFilter} />
         </div>
         <div class="content-element">
-          <DetailGraph {data} {dateHover} />
+          <DetailGraph {data} {dateHover} {dateRange} />
         </div>
       {/if}
     </div>

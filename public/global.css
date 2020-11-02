@@ -266,7 +266,6 @@ body > header {
   display: grid;
   min-height: 2rem;
   align-items: center;
-  padding: 1rem 1.5rem;
   grid-template-columns: max-content auto;
 }
 

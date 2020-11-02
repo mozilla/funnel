@@ -6,12 +6,14 @@
     sankeyLinkHorizontal as embedding,
     sankeyLeft as nodeAlign,
   } from "d3-sankey";
-  import { sum, sortBy, zipWith } from "lodash";
+  import { sortBy, zipWith } from "lodash";
   import { fade, fly } from "svelte/transition";
   import { colorKey } from "./ColorKey";
+  import { getSummary } from "../state/summary.js";
 
   const count = format(",");
 
+  export let summary;
   export let data;
   export let dateFilter;
   export let width = 900;
@@ -21,42 +23,15 @@
   export let top = 0;
   export let bottom = 0;
 
-  function sumColumn(data, valColName, dateFilter) {
-    let filteredData = dateFilter
-      ? data.filter(
-          (d) =>
-            d.date.getUTCFullYear() === dateFilter.getUTCFullYear() &&
-            d.date.getUTCMonth() === dateFilter.getUTCMonth() &&
-            d.date.getUTCDate() === dateFilter.getUTCDate()
-        )
-      : data;
-    // weird edge case where we're outside the range in the graph
-    if (filteredData.length === 0) {
-      filteredData = data;
-    }
-    return sum(filteredData.map((ni) => ni[valColName]));
-  }
-
   let sankey = undefined;
-
   $: {
-    const summary = {
-      nonFirefoxSessions: sumColumn(data, "nonFxSessions", dateFilter),
-      downloads: sumColumn(data, "nonFxDownloads", dateFilter),
-      newInstalls: sumColumn(data, "successful_new_installs", dateFilter),
-      paveovers: sumColumn(data, "successful_paveovers", dateFilter),
-      newProfiles: sumColumn(data, "new_profiles", dateFilter),
-      profileActivated: sumColumn(data, "num_activated", dateFilter),
-    };
-    summary.didntDownload = summary.nonFirefoxSessions - summary.downloads;
-    summary.didntInstall =
-      summary.downloads - summary.newInstalls - summary.paveovers;
-    summary.noNewProfile = summary.newInstalls - summary.newProfiles;
-    summary.notActivated = summary.newProfiles - summary.profileActivated;
+    const localSummary = dateFilter
+      ? getSummary(data, dateFilter)
+      : summary.current;
     const nodes = [
       {
         id: "nonFirefoxSessions",
-        fixedValue: summary.nonFirefoxSessions,
+        fixedValue: localSummary.nonFirefoxSessions,
         name: "Web Sessions",
         color: colorKey.sessions,
       },
@@ -84,51 +59,51 @@
       {
         source: "nonFirefoxSessions",
         target: "downloads",
-        value: summary.downloads,
+        value: localSummary.downloads,
       },
       {
         source: "nonFirefoxSessions",
         target: "didntDownload",
-        value: summary.didntDownload,
+        value: localSummary.didntDownload,
         bounced: true,
       },
       {
         source: "downloads",
         target: "newInstalls",
-        value: summary.newInstalls,
+        value: localSummary.newInstalls,
       },
       {
         source: "downloads",
         target: "paveovers",
-        value: summary.paveovers,
+        value: localSummary.paveovers,
         bounced: true,
       },
       {
         source: "downloads",
         target: "didntInstall",
-        value: summary.didntInstall,
+        value: localSummary.didntInstall,
         bounced: true,
       },
       {
         source: "newInstalls",
         target: "newProfiles",
-        value: summary.newProfiles,
+        value: localSummary.newProfiles,
       },
       {
         source: "newInstalls",
         target: "noNewProfile",
-        value: summary.noNewProfile,
+        value: localSummary.noNewProfile,
         bounced: true,
       },
       {
         source: "newProfiles",
         target: "profileActivated",
-        value: summary.profileActivated,
+        value: localSummary.profileActivated,
       },
       {
         source: "newProfiles",
         target: "notActivated",
-        value: summary.notActivated,
+        value: localSummary.notActivated,
         bounced: true,
       },
     ];
