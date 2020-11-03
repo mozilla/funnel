@@ -7,11 +7,12 @@
   export let value;
   export let compare;
   export let description;
+  export let range;
 
   $: comparePct = value / compare - 1;
-  $: compareStr = `vs. ${format(",")(compare)} in previous (${
-    comparePct > 0 ? "+" : ""
-  }${format(".0%")(comparePct)})`;
+  $: compareStr = `${comparePct > 0 ? "+" : ""}${format(".1%")(
+    comparePct
+  )} from previous ${range} days (${format(",")(compare)})`;
 </script>
 
 <style>

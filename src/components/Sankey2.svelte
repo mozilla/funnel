@@ -36,7 +36,7 @@
         color: colorKey.sessions,
       },
       { id: "downloads", name: "Downloaded", color: colorKey.downloads },
-      { id: "newInstalls", name: "New install", color: colorKey.installs },
+      { id: "newInstalls", name: "Newly installed", color: colorKey.installs },
       {
         id: "newProfiles",
         name: "First run",
