@@ -31,7 +31,7 @@
         x: "date",
         y: "nonFxSessions",
         color: colorKey.sessions,
-        label: "Web Sessions",
+        label: "Web visits",
       },
       {
         data: getValueSeries(data, dateRangeValue),
@@ -45,21 +45,21 @@
         x: "date",
         y: "successful_new_installs",
         color: colorKey.installs,
-        label: "New Installs",
+        label: "New installs",
       },
       {
         data: getValueSeries(data, dateRangeValue),
         x: "date",
         y: "new_profiles",
         color: colorKey.profiles,
-        label: "New Profiles",
+        label: "First runs",
       },
       {
         data: getValueSeries(data, dateRangeValue),
         x: "date",
         y: "num_activated",
         color: colorKey.activations,
-        label: "Activated Profiles",
+        label: "Activated",
       },
     ];
     rateDatasets = [

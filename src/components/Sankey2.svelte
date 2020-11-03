@@ -32,27 +32,27 @@
       {
         id: "nonFirefoxSessions",
         fixedValue: localSummary.nonFirefoxSessions,
-        name: "Web Sessions",
+        name: "Web visits",
         color: colorKey.sessions,
       },
-      { id: "downloads", name: "Firefox Downloads", color: colorKey.downloads },
-      { id: "newInstalls", name: "New Installs", color: colorKey.installs },
+      { id: "downloads", name: "Downloaded", color: colorKey.downloads },
+      { id: "newInstalls", name: "New install", color: colorKey.installs },
       {
         id: "newProfiles",
-        name: "New Profiles",
+        name: "First run",
         color: colorKey.profiles,
         textColor: "#444",
       },
       {
         id: "profileActivated",
-        name: "Activated Profiles",
+        name: "7-day activation",
         color: colorKey.activations,
         textColor: "#444",
       },
-      { id: "paveovers", name: "Paveovers", bounce: true },
-      { id: "didntDownload", name: "Didn't Download", bounce: true },
+      { id: "reinstalls", name: "Re-installed", bounce: true },
+      { id: "didntDownload", name: "Didn't download", bounce: true },
       { id: "didntInstall", name: "Didn't install", bounce: true },
-      { id: "noNewProfile", name: "No new profile", bounce: true },
+      { id: "noNewProfile", name: "No first run", bounce: true },
       { id: "notActivated", name: "Didn't activate", bounce: true },
     ];
     const links = [
@@ -74,8 +74,8 @@
       },
       {
         source: "downloads",
-        target: "paveovers",
-        value: localSummary.paveovers,
+        target: "reinstalls",
+        value: localSummary.reinstalls,
         bounced: true,
       },
       {

@@ -34,13 +34,13 @@ export function getSummary(data, dateFilter) {
     nonFirefoxSessions: sumColumn(data, "nonFxSessions", dateFilter),
     downloads: sumColumn(data, "nonFxDownloads", dateFilter),
     newInstalls: sumColumn(data, "successful_new_installs", dateFilter),
-    paveovers: sumColumn(data, "successful_paveovers", dateFilter),
+    reinstalls: sumColumn(data, "successful_paveovers", dateFilter),
     newProfiles: sumColumn(data, "new_profiles", dateFilter),
     profileActivated: sumColumn(data, "num_activated", dateFilter),
   };
   summary.didntDownload = summary.nonFirefoxSessions - summary.downloads;
   summary.didntInstall =
-    summary.downloads - summary.newInstalls - summary.paveovers;
+    summary.downloads - summary.newInstalls - summary.reinstalls;
   summary.noNewProfile = summary.newInstalls - summary.newProfiles;
   summary.notActivated = summary.newProfiles - summary.profileActivated;
 

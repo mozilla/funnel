@@ -60,7 +60,9 @@
           <a href={feedbackLink} target="blank_">Feedback</a>
           (and questions!) are welcome.
         </div>
-        <SubSectionHeader>The Firefox Acquisition Journey</SubSectionHeader>
+        <SubSectionHeader>
+          mozilla.org Desktop Acquisition Funnel
+        </SubSectionHeader>
         <ExecutiveSummary {summary} />
         <SubSectionHeader>Details</SubSectionHeader>
         <div class="content-element">
