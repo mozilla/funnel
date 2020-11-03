@@ -59,6 +59,7 @@ export function getSummaryDays(data, range) {
   };
 
   return {
+    dateRange: range,
     currentRange: dateFilterLatest,
     previousRange: dateFilterPrevious,
     current: getSummary(data, dateFilterLatest),

@@ -9,14 +9,17 @@
   import { fetchQueries } from "./state/queries";
   import { feedbackLink } from "./links.js";
   import { getSummaryDays } from "./state/summary.js";
+  import { dateRange } from "./state/vars.js";
 
   let data;
   let dateFilter;
   let summary;
-  let dateRange = 30;
+
   fetchQueries().then((rs) => {
     data = rs;
-    summary = getSummaryDays(data, dateRange);
+    dateRange.subscribe((value) => {
+      summary = getSummaryDays(data, value);
+    });
   });
 
   function dateHover(date) {
@@ -64,7 +67,7 @@
           <Sankey2 {summary} {data} {dateFilter} />
         </div>
         <div class="content-element">
-          <DetailGraph {data} {dateHover} {dateRange} />
+          <DetailGraph {data} {dateHover} />
         </div>
       {/if}
     </div>

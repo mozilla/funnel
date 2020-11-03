@@ -10,6 +10,7 @@
   import MetricMouseover from "./MetricMouseover.svelte";
   import { colorKey } from "./ColorKey";
   import { getValueSeries, getRateSeries } from "../state/summary.js";
+  import { dateRange } from "../state/vars.js";
 
   export let dateHover;
 
@@ -19,94 +20,114 @@
   export let curve = "curveMonotoneX";
   export let dashArray = "1,0";
   export let data;
-  export let dateRange;
   let mousePosition2;
+
+  let datasets = [];
+  let rateDatasets = [];
+  dateRange.subscribe((dateRangeValue) => {
+    datasets = [
+      {
+        data: getValueSeries(data, dateRangeValue),
+        x: "date",
+        y: "nonFxSessions",
+        color: colorKey.sessions,
+        label: "Web Sessions",
+      },
+      {
+        data: getValueSeries(data, dateRangeValue),
+        x: "date",
+        y: "nonFxDownloads",
+        color: colorKey.downloads,
+        label: "Downloads",
+      },
+      {
+        data: getValueSeries(data, dateRangeValue),
+        x: "date",
+        y: "successful_new_installs",
+        color: colorKey.installs,
+        label: "New Installs",
+      },
+      {
+        data: getValueSeries(data, dateRangeValue),
+        x: "date",
+        y: "new_profiles",
+        color: colorKey.profiles,
+        label: "New Profiles",
+      },
+      {
+        data: getValueSeries(data, dateRangeValue),
+        x: "date",
+        y: "num_activated",
+        color: colorKey.activations,
+        label: "Activated Profiles",
+      },
+    ];
+    rateDatasets = [
+      {
+        x: "date",
+        y: "y",
+        data: getRateSeries(
+          data,
+          dateRangeValue,
+          "nonFxSessions",
+          "nonFxDownloads"
+        ),
+        label: "Download rate",
+        color: colorKey.downloads,
+      },
+      {
+        x: "date",
+        y: "y",
+        data: getRateSeries(
+          data,
+          dateRangeValue,
+          "nonFxSessions",
+          "successful_new_installs"
+        ),
+        label: "Installation rate",
+        color: colorKey.installs,
+      },
+      {
+        x: "date",
+        y: "y",
+        data: getRateSeries(
+          data,
+          dateRangeValue,
+          "nonFxSessions",
+          "new_profiles"
+        ),
+        label: "New profile rate",
+        color: colorKey.profiles,
+      },
+      {
+        x: "date",
+        y: "y",
+        data: getRateSeries(
+          data,
+          dateRangeValue,
+          "nonFxSessions",
+          "num_activated"
+        ),
+        label: "Activation rate",
+        color: colorKey.activations,
+      },
+    ];
+    console.log(datasets);
+    console.log(rateDatasets);
+  });
 
   $: {
     if (dateHover) {
       dateHover(mousePosition2 && mousePosition2.x);
     }
   }
-
-  $: datasets = [
-    {
-      data: getValueSeries(data, dateRange),
-      x: "date",
-      y: "nonFxSessions",
-      color: colorKey.sessions,
-      label: "Web Sessions",
-    },
-    {
-      data: getValueSeries(data, dateRange),
-      x: "date",
-      y: "nonFxDownloads",
-      color: colorKey.downloads,
-      label: "Downloads",
-    },
-    {
-      data: getValueSeries(data, dateRange),
-      x: "date",
-      y: "successful_new_installs",
-      color: colorKey.installs,
-      label: "New Installs",
-    },
-    {
-      data: getValueSeries(data, dateRange),
-      x: "date",
-      y: "new_profiles",
-      color: colorKey.profiles,
-      label: "New Profiles",
-    },
-    {
-      data: getValueSeries(data, dateRange),
-      x: "date",
-      y: "num_activated",
-      color: colorKey.activations,
-      label: "Activated Profiles",
-    },
-  ];
-
-  $: rateDatasets = [
-    {
-      x: "date",
-      y: "y",
-      data: getRateSeries(data, dateRange, "nonFxSessions", "nonFxDownloads"),
-      label: "Download rate",
-      color: colorKey.downloads,
-    },
-    {
-      x: "date",
-      y: "y",
-      data: getRateSeries(
-        data,
-        dateRange,
-        "nonFxSessions",
-        "successful_new_installs"
-      ),
-      label: "Installation rate",
-      color: colorKey.installs,
-    },
-    {
-      x: "date",
-      y: "y",
-      data: getRateSeries(data, dateRange, "nonFxSessions", "new_profiles"),
-      label: "New profile rate",
-      color: colorKey.profiles,
-    },
-    {
-      x: "date",
-      y: "y",
-      data: getRateSeries(data, dateRange, "nonFxSessions", "num_activated"),
-      label: "Activation rate",
-      color: colorKey.activations,
-    },
-  ];
 </script>
 
 <Tiles>
   <Stack>
     <h4>Numbers</h4>
     <DataGraphic
+      xMin={datasets[0].data[0].date}
       yMin={0}
       xType="time"
       yType="linear"
@@ -156,6 +177,7 @@
   <Stack>
     <h4>Rates</h4>
     <DataGraphic
+      xMin={datasets[0].data[0].date}
       yMin={0}
       yMax={1}
       xType="time"
