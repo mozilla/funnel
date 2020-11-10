@@ -25,10 +25,7 @@ export function fetchQueries() {
       const res = await Promise.all(
         responses.map(async (r) => {
           const csv = await r.text();
-          return sortBy(
-            csvParse(csv, autoType),
-            (d) => d.date
-          );
+          return sortBy(csvParse(csv, autoType), (d) => d.date);
         })
       );
       return zipWith(res[0], res[1], res[2], (a, b, c) => {

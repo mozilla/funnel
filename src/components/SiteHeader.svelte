@@ -45,7 +45,7 @@
 
 <header class="site-header">
   <div class="header-content">
-    <h1>Numbers That Matter</h1>
+    <h1>The Desktop Acquisition Funnel</h1>
     <nav>
       <ul>
         <li>

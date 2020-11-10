@@ -56,5 +56,4 @@
   </div>
   <div class="big-number--number">{format(',')(value)}</div>
   <div class="big-number--compare">{compareStr}</div>
-
 </div>

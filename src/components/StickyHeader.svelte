@@ -68,7 +68,8 @@
       <div class="section-header__text">
         The Numbers
         <span in:fade={{ duration: 1500 }} class="date-range">
-          until {dateFormat.format(summary.currentRange.end)}
+          until
+          {dateFormat.format(summary.currentRange.end)}
         </span>
       </div>
       <div class="menus">
@@ -78,7 +79,6 @@
           {/each}
         </OptionMenu>
       </div>
-
     </div>
   </h2>
 </div>

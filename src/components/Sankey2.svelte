@@ -32,7 +32,7 @@
       {
         id: "nonFirefoxSessions",
         fixedValue: localSummary.nonFirefoxSessions,
-        name: "Web visits",
+        name: "Visits",
         color: colorKey.sessions,
       },
       { id: "downloads", name: "Downloaded", color: colorKey.downloads },
@@ -45,7 +45,7 @@
       },
       {
         id: "profileActivated",
-        name: "7-day activation",
+        name: "7 day activated",
         color: colorKey.activations,
         textColor: "#444",
       },
@@ -162,7 +162,8 @@
           y={2 + 14}
           style="font-variant-numeric: tabular-nums;"
           text-anchor={'start'}>
-          {format('.1%')(node.value / sankey.nodes[0].fixedValue)} ({format('.2s')(node.value)})
+          {format('.1%')(node.value / sankey.nodes[0].fixedValue)}
+          ({format('.2s')(node.value)})
         </text>
       </g>
     {/each}

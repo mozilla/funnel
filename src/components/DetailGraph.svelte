@@ -31,7 +31,7 @@
         x: "date",
         y: "nonFxSessions",
         color: colorKey.sessions,
-        label: "Web visits",
+        label: "Visits",
       },
       {
         data: getValueSeries(data, dateRangeValue),

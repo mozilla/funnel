@@ -33,7 +33,7 @@
 
 <div class="topline-numbers">
   <BigNumber
-    label={'Web Visits'}
+    label={'Visits'}
     description={'An individual user visits mozilla.org. By default, if a user is inactive for 30 minutes or more, any future activity is attributed to a new visit. Users that leave mozilla.org and return within 30 minutes are counted as part of the original visit. Also called "sessions".'}
     range={summary.range}
     value={summary.current.nonFirefoxSessions}
@@ -63,7 +63,7 @@
     value={summary.current.newProfiles}
     compare={summary.previous.newProfiles} />
   <BigNumber
-    label={'7 Day Activation'}
+    label={'7 Day Activated'}
     description={'A new profile is active at least 5 days out of 7 in the week after it’s first run. Note, this number is only available one week after a cohort date. '}
     range={summary.range}
     value={summary.current.profileActivated}
