@@ -6,6 +6,7 @@
   import SiteHeader from "./components/SiteHeader.svelte";
   import StickyHeader from "./components/StickyHeader.svelte";
   import SubSectionHeader from "./components/SubSectionHeader.svelte";
+  import SiteFooter from "./components/SiteFooter.svelte";
   import { fetchQueries } from "./state/queries";
   import { feedbackLink } from "./links.js";
   import { getSummaryDays } from "./state/summary.js";
@@ -62,13 +63,16 @@
           (and questions!) are welcome.
         </div>
         <p>
-          This dashboard models the user journey of new Firefox (desktop) users acquired from mozilla.org.
-          It is restricted to mozilla.org visits and downloads from a browser other than Firefox on Windows only
-          (i.e., it excludes Mac and Linux), and also excludes new users coming from other sources
-          (FTP, partners, etc.). Users can download Firefox from several different touchpoints on mozilla.org
-          (e.g., <a href="https://www.mozilla.org/en-US/firefox/new/">landing</a>
-          <a href="https://www.mozilla.org/en-US/firefox/unfck/">pages</a>, navigation, banners), and this dashboard
-          currently aggregates downloads across all these touchpoints.
+          This dashboard models the user journey of new Firefox (desktop) users
+          acquired from mozilla.org. It is restricted to mozilla.org visits and
+          downloads from a browser other than Firefox on Windows only (i.e., it
+          excludes Mac and Linux), and also excludes new users coming from other
+          sources (FTP, partners, etc.). Users can download Firefox from several
+          different touchpoints on mozilla.org (e.g.,
+          <a href="https://www.mozilla.org/en-US/firefox/new/">landing</a>
+          <a href="https://www.mozilla.org/en-US/firefox/unfck/">pages</a>,
+          navigation, banners), and this dashboard currently aggregates
+          downloads across all these touchpoints.
         </p>
         <SubSectionHeader>
           mozilla.org Desktop Acquisition Funnel
@@ -84,5 +88,5 @@
       {/if}
     </div>
   </div>
+  <SiteFooter />
 </main>
-<footer>Made by Mozilla Data.</footer>
