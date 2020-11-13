@@ -75,7 +75,7 @@
           downloads across all these touchpoints.
         </p>
         <SubSectionHeader>
-          mozilla.org Desktop Acquisition Funnel
+          mozilla.org Attributed Funnel
         </SubSectionHeader>
         <ExecutiveSummary {summary} />
         <SubSectionHeader>Details</SubSectionHeader>
