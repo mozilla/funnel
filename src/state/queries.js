@@ -5,17 +5,17 @@ const redashQueries = [
   {
     name: "numDownloads",
     url:
-      "https://sql.telemetry.mozilla.org/api/queries/75777/results.csv?api_key=oYtap5NZVQ0hgTkTgyrDtG33EkctfSGtG6iIE5wX",
+      "https://sql.telemetry.mozilla.org/api/queries/76276/results.csv?api_key=u03eA9ZbhRNnIzCSiAy13r6S3HEBj5wmv9WqVO8z",
   },
   {
     name: "numInstalls",
     url:
-      "https://sql.telemetry.mozilla.org/api/queries/75782/results.csv?api_key=bE8GZUUYQk1yUlJRxNy7Tf5qKzSRS6peSY8CrWss",
+      "https://sql.telemetry.mozilla.org/api/queries/76247/results.csv?api_key=5H37v84oZ9DkVqwOla7ziKqtuwvOLrBw57Bf9jrJ",
   },
   {
     name: "numProfiles",
     url:
-      "https://sql.telemetry.mozilla.org/api/queries/75780/results.csv?api_key=KenFZhAjEg0T28xZkaWyuv5DeCzQfj8gMaa3KgSU",
+      "https://sql.telemetry.mozilla.org/api/queries/76277/results.csv?api_key=D9jSv7xp25O0FnwL6abLSzaiZZsh4XB491xNL9fA",
   },
 ];
 
@@ -28,6 +28,7 @@ export function fetchQueries() {
           return sortBy(csvParse(csv, autoType), (d) => d.date);
         })
       );
+      console.log(res);
       return zipWith(res[0], res[1], res[2], (a, b, c) => {
         return { ...a, ...b, ...c };
       });

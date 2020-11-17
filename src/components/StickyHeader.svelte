@@ -1,13 +1,23 @@
 <script>
   import { OptionMenu, Option, OptionDivider } from "@graph-paper/optionmenu";
   import { fade } from "svelte/transition";
-  import { dateRange, dateRangeOptions } from "../state/vars.js";
+  import {
+    country,
+    countryOptions,
+    dateRange,
+    dateRangeOptions,
+  } from "../state/vars.js";
 
   export let summary;
 
-  let selected;
-  dateRange.subscribe((value) => (selected = value));
+  let countrySelected;
+  country.subscribe((value) => (countrySelected = value));
+  function handleCountrySelection({ detail: { key } }) {
+    country.set(key);
+  }
 
+  let dateSelected;
+  dateRange.subscribe((value) => (dateSelected = value));
   function handleDateRangeSelection({ detail: { key } }) {
     dateRange.set(key);
   }
@@ -59,6 +69,8 @@
   .menus {
     display: grid;
     align-content: center;
+    grid-auto-flow: column;
+    grid-column-gap: var(--space-4x);
   }
 </style>
 
@@ -75,7 +87,22 @@
       <div class="menus">
         <OptionMenu on:selection={handleDateRangeSelection}>
           {#each dateRangeOptions as { key, label }, i (key)}
-            <Option {key} {label} selected={selected === key} />
+            <Option {key} {label} selected={dateSelected === key} />
+          {/each}
+        </OptionMenu>
+        <OptionMenu
+          on:selection={handleCountrySelection}
+          options={countryOptions}>
+          {#each countryOptions as { key, label, description }, i (key)}
+            {#if key === 'DIVIDER'}
+              <OptionDivider />
+            {:else}
+              <Option
+                {key}
+                {label}
+                {description}
+                selected={countrySelected === key} />
+            {/if}
           {/each}
         </OptionMenu>
       </div>

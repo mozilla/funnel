@@ -10,7 +10,7 @@
   import MetricMouseover from "./MetricMouseover.svelte";
   import { colorKey } from "./ColorKey";
   import { getValueSeries, getRateSeries } from "../state/summary.js";
-  import { dateRange } from "../state/vars.js";
+  import { country, dateRange } from "../state/vars.js";
 
   export let dateHover;
 
@@ -24,38 +24,39 @@
 
   let datasets = [];
   let rateDatasets = [];
-  dateRange.subscribe((dateRangeValue) => {
+
+  const recreateDatasets = () => {
     datasets = [
       {
-        data: getValueSeries(data, dateRangeValue),
+        data: getValueSeries(data, $country, $dateRange),
         x: "date",
         y: "nonFxSessions",
         color: colorKey.sessions,
         label: "Visits",
       },
       {
-        data: getValueSeries(data, dateRangeValue),
+        data: getValueSeries(data, $country, $dateRange),
         x: "date",
         y: "nonFxDownloads",
         color: colorKey.downloads,
         label: "Downloads",
       },
       {
-        data: getValueSeries(data, dateRangeValue),
+        data: getValueSeries(data, $country, $dateRange),
         x: "date",
         y: "successful_new_installs",
         color: colorKey.installs,
         label: "New installs",
       },
       {
-        data: getValueSeries(data, dateRangeValue),
+        data: getValueSeries(data, $country, $dateRange),
         x: "date",
         y: "new_profiles",
         color: colorKey.profiles,
         label: "First runs",
       },
       {
-        data: getValueSeries(data, dateRangeValue),
+        data: getValueSeries(data, $country, $dateRange),
         x: "date",
         y: "num_activated",
         color: colorKey.activations,
@@ -68,7 +69,8 @@
         y: "y",
         data: getRateSeries(
           data,
-          dateRangeValue,
+          $country,
+          $dateRange,
           "nonFxSessions",
           "nonFxDownloads"
         ),
@@ -80,7 +82,8 @@
         y: "y",
         data: getRateSeries(
           data,
-          dateRangeValue,
+          $country,
+          $dateRange,
           "nonFxSessions",
           "successful_new_installs"
         ),
@@ -92,7 +95,8 @@
         y: "y",
         data: getRateSeries(
           data,
-          dateRangeValue,
+          $country,
+          $dateRange,
           "nonFxSessions",
           "new_profiles"
         ),
@@ -104,7 +108,8 @@
         y: "y",
         data: getRateSeries(
           data,
-          dateRangeValue,
+          $country,
+          $dateRange,
           "nonFxSessions",
           "num_activated"
         ),
@@ -112,9 +117,12 @@
         color: colorKey.activations,
       },
     ];
+
     console.log(datasets);
-    console.log(rateDatasets);
-  });
+  };
+
+  country.subscribe(recreateDatasets);
+  dateRange.subscribe(recreateDatasets);
 
   $: {
     if (dateHover) {

@@ -10,6 +10,7 @@
   import { fade, fly } from "svelte/transition";
   import { colorKey } from "./ColorKey";
   import { getSummary } from "../state/summary.js";
+  import { country } from "../state/vars.js";
 
   const count = format(",");
 
@@ -26,7 +27,7 @@
   let sankey = undefined;
   $: {
     const localSummary = dateFilter
-      ? getSummary(data, dateFilter)
+      ? getSummary(data, $country, dateFilter)
       : summary.current;
     const nodes = [
       {

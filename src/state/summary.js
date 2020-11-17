@@ -1,26 +1,7 @@
 import { isDate, max, sum } from "lodash";
 
-function sumColumn(data, valColName, dateFilter) {
-  let filteredData = data;
-
-  if (isDate(dateFilter)) {
-    filteredData = data.filter(
-      (d) =>
-        d.date.getUTCFullYear() === dateFilter.getUTCFullYear() &&
-        d.date.getUTCMonth() === dateFilter.getUTCMonth() &&
-        d.date.getUTCDate() === dateFilter.getUTCDate()
-    );
-  } else if (dateFilter) {
-    filteredData = data.filter(
-      (d) => d.date >= dateFilter.start && d.date <= dateFilter.end
-    );
-  }
-
-  // weird edge case where we're outside the range in the graph
-  if (filteredData.length === 0) {
-    filteredData = data;
-  }
-  return sum(filteredData.map((ni) => ni[valColName]));
+function sumColumn(data, valColName) {
+  return sum(data.map((ni) => ni[valColName]));
 }
 
 function subtractDays(date, numDays) {
@@ -29,14 +10,30 @@ function subtractDays(date, numDays) {
   return newDate;
 }
 
-export function getSummary(data, dateFilter) {
+export function getSummary(data, countryGroup, dateFilter) {
+  const filteredData = data
+    .filter((d) => d.country_group === countryGroup)
+    .filter((d) => {
+      if (isDate(dateFilter)) {
+        return (
+          d.date.getUTCFullYear() === dateFilter.getUTCFullYear() &&
+          d.date.getUTCMonth() === dateFilter.getUTCMonth() &&
+          d.date.getUTCDate() === dateFilter.getUTCDate()
+        );
+      }
+      if (dateFilter) {
+        return d.date >= dateFilter.start && d.date <= dateFilter.end;
+      }
+      return true;
+    });
+  console.log(filteredData);
   const summary = {
-    nonFirefoxSessions: sumColumn(data, "nonFxSessions", dateFilter),
-    downloads: sumColumn(data, "nonFxDownloads", dateFilter),
-    newInstalls: sumColumn(data, "successful_new_installs", dateFilter),
-    reinstalls: sumColumn(data, "successful_paveovers", dateFilter),
-    newProfiles: sumColumn(data, "new_profiles", dateFilter),
-    profileActivated: sumColumn(data, "num_activated", dateFilter),
+    nonFirefoxSessions: sumColumn(filteredData, "nonFxSessions"),
+    downloads: sumColumn(filteredData, "nonFxDownloads"),
+    newInstalls: sumColumn(filteredData, "successful_new_installs"),
+    reinstalls: sumColumn(filteredData, "successful_paveovers"),
+    newProfiles: sumColumn(filteredData, "new_profiles"),
+    profileActivated: sumColumn(filteredData, "num_activated"),
   };
   summary.didntDownload = summary.nonFirefoxSessions - summary.downloads;
   summary.didntInstall =
@@ -47,7 +44,7 @@ export function getSummary(data, dateFilter) {
   return summary;
 }
 
-export function getSummaryDays(data, range) {
+export function getSummaryDays(data, countryGroup, range) {
   const latestDate = max(data.map((d) => d.date));
   const dateFilterLatest = {
     start: subtractDays(latestDate, range),
@@ -62,19 +59,27 @@ export function getSummaryDays(data, range) {
     range,
     currentRange: dateFilterLatest,
     previousRange: dateFilterPrevious,
-    current: getSummary(data, dateFilterLatest),
-    previous: getSummary(data, dateFilterPrevious),
+    current: getSummary(data, countryGroup, dateFilterLatest),
+    previous: getSummary(data, countryGroup, dateFilterPrevious),
   };
 }
 
-export function getValueSeries(data, dateRange) {
+export function getValueSeries(data, countryGroup, dateRange) {
   const latestDate = max(data.map((d) => d.date));
   const startDate = subtractDays(latestDate, dateRange);
-  return data.filter((d) => d.date >= startDate);
+  return data.filter(
+    (d) => d.country_group === countryGroup && d.date >= startDate
+  );
 }
 
-export function getRateSeries(data, dateRange, x1ColName, x2ColName) {
-  return getValueSeries(data, dateRange).map((d) => ({
+export function getRateSeries(
+  data,
+  countryGroup,
+  dateRange,
+  x1ColName,
+  x2ColName
+) {
+  return getValueSeries(data, countryGroup, dateRange).map((d) => ({
     date: d.date,
     y: d[x2ColName] / d[x1ColName],
   }));

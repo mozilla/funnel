@@ -10,7 +10,7 @@
   import { fetchQueries } from "./state/queries";
   import { feedbackLink } from "./links.js";
   import { getSummaryDays } from "./state/summary.js";
-  import { dateRange } from "./state/vars.js";
+  import { country, dateRange } from "./state/vars.js";
 
   let data;
   let dateFilter;
@@ -18,8 +18,12 @@
 
   fetchQueries().then((rs) => {
     data = rs;
+    console.log(data);
     dateRange.subscribe((value) => {
-      summary = getSummaryDays(data, value);
+      summary = getSummaryDays(data, $country, value);
+    });
+    country.subscribe((value) => {
+      summary = getSummaryDays(data, value, $dateRange);
     });
   });
 
@@ -74,9 +78,7 @@
           navigation, banners), and this dashboard currently aggregates
           downloads across all these touchpoints.
         </p>
-        <SubSectionHeader>
-          mozilla.org Attributed Funnel
-        </SubSectionHeader>
+        <SubSectionHeader>mozilla.org Attributed Funnel</SubSectionHeader>
         <ExecutiveSummary {summary} />
         <SubSectionHeader>Details</SubSectionHeader>
         <div class="content-element">
