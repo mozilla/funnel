@@ -18,7 +18,6 @@
 
   fetchQueries().then((rs) => {
     data = rs;
-    console.log(data);
     dateRange.subscribe((value) => {
       summary = getSummaryDays(data, $country, value);
     });

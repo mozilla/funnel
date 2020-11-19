@@ -1,5 +1,6 @@
 <script>
   import { OptionMenu, Option, OptionDivider } from "@graph-paper/optionmenu";
+  import HelpHoverable from "./HelpHoverable.svelte";
   import { fade } from "svelte/transition";
   import {
     country,
@@ -78,11 +79,13 @@
   <h2>
     <div class="section-header">
       <div class="section-header__text">
-        The Numbers
+        Numbers that Matter
         <span in:fade={{ duration: 1500 }} class="date-range">
           until
           {dateFormat.format(summary.currentRange.end)}
         </span>
+        <HelpHoverable
+          description="Results updated every Monday, a week behind so 7 day activation can be calculated." />
       </div>
       <div class="menus">
         <OptionMenu on:selection={handleDateRangeSelection}>

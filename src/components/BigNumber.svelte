@@ -1,6 +1,6 @@
 <script>
   import { format } from "d3-format";
-  import Help from "./Help.svelte";
+  import HelpHoverable from "./HelpHoverable.svelte";
   import { tooltip } from "./tooltip";
 
   export let label;
@@ -49,9 +49,7 @@
   <div class="big-number--label">
     {label}
     {#if description}
-      <span use:tooltip={{ text: description, location: 'top' }}>
-        <Help size="16" />
-      </span>
+      <HelpHoverable {description} />
     {/if}
   </div>
   <div class="big-number--number">{format(',')(value)}</div>
