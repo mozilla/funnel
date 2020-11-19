@@ -34,7 +34,7 @@
         - @shong /
         <a href={feedbackLink}>#numbers-that-matter-feedback</a>
       </div>
-      <div><b>Dataset</b> – @sghose / @shong / @wlach</div>
+      <div><b>Dataset</b> – @loines / @sghose / @shong / @wlach</div>
       <div><b>Frontend</b> – @wlach</div>
     </div>
   </div>
