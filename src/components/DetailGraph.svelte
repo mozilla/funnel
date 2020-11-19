@@ -6,6 +6,7 @@
   import { MarginText, LeftAxis, BottomAxis } from "@graph-paper/guides";
   import { Stack } from "@graph-paper/stack";
   import { Tiles } from "@graph-paper/tiles";
+  import HelpHoverable from "./HelpHoverable.svelte";
   import HorizontalWindow from "./HorizontalWindow.svelte";
   import MetricMouseover from "./MetricMouseover.svelte";
   import { colorKey } from "./ColorKey";
@@ -131,9 +132,25 @@
   }
 </script>
 
+<style>
+  .chart-header {
+    display: grid;
+    gap: 4px;
+    grid-auto-flow: column;
+    justify-content: left;
+    align-content: center;
+    font-size: var(--text-04);
+    color: var(--cool-gray-750);
+  }
+</style>
+
 <Tiles>
   <Stack>
-    <h4>Numbers</h4>
+    <div class="chart-header">
+      Numbers
+      <HelpHoverable
+        description={'Aggregate counts of each funnel milestone per day. This allows us to understand how the funnel is changing over time. Note: the number of users entering our funnel has high day-of-week seasonality, meaning the volume dips on weekends, and spikes on weekdays. This is normal and expected.'} />
+    </div>
     <DataGraphic
       xMin={datasets[0].data[0].date}
       yMin={0}
@@ -183,7 +200,11 @@
   </Stack>
 
   <Stack>
-    <h4>Rates</h4>
+    <div class="chart-header">
+      Rates
+      <HelpHoverable
+        description={'Percentages of each funnel milestone per day. “Of all the visitors for that day, how many reached <X> milestone for that day?”'} />
+    </div>
     <DataGraphic
       xMin={datasets[0].data[0].date}
       yMin={0}

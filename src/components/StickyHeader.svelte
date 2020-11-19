@@ -67,6 +67,7 @@
     margin: 0;
     z-index: 10;
   }
+
   .menus {
     display: grid;
     align-content: center;
@@ -79,7 +80,7 @@
   <h2>
     <div class="section-header">
       <div class="section-header__text">
-        Numbers that Matter
+        <span>Numbers that Matter</span>
         <span in:fade={{ duration: 1500 }} class="date-range">
           until
           {dateFormat.format(summary.currentRange.end)}
