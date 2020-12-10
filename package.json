@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "start": "sirv public",
     "storybook": "start-storybook --static-dir ./public -p 6006",
-    "test": "npm-run-all format:check lint test:jest",
+    "test": "npm-run-all format:check lint",
     "test:jest": "jest tests --no-cache"
   },
   "devDependencies": {
