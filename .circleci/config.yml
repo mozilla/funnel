@@ -9,7 +9,9 @@ jobs:
     steps:
       - checkout
       - node/install-packages
+      - run: echo $REDASH_QUERY_JSON > queries.json
       - run: npm install
+      - run: npm build
       - run: npm test
 workflows:
   build-and-test:
