@@ -82,7 +82,7 @@
       <div class="section-header__text">
         <span>Numbers that Matter</span>
         <span in:fade={{ duration: 1500 }} class="date-range">
-          until
+          Updated
           {dateFormat.format(summary.currentRange.end)}
         </span>
         <HelpHoverable
