@@ -1,12 +1,7 @@
 <script>
-  import { sortBy, zipWith } from "lodash";
-  import { format } from "d3-format";
   import BigNumber from "./BigNumber.svelte";
-  export let summary;
 
-  const dateFormat = new Intl.DateTimeFormat([], {
-    dateStyle: "medium",
-  });
+  export let summary;
 </script>
 
 <style>

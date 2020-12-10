@@ -3,15 +3,15 @@
   import { timeFormat } from "d3-time-format";
   import { DataGraphic } from "@graph-paper/datagraphic";
   import { Line } from "@graph-paper/elements";
-  import { MarginText, LeftAxis, BottomAxis } from "@graph-paper/guides";
+  import { LeftAxis, BottomAxis } from "@graph-paper/guides";
   import { Stack } from "@graph-paper/stack";
   import { Tiles } from "@graph-paper/tiles";
   import HelpHoverable from "./HelpHoverable.svelte";
   import HorizontalWindow from "./HorizontalWindow.svelte";
   import MetricMouseover from "./MetricMouseover.svelte";
   import { colorKey } from "./ColorKey";
-  import { getValueSeries, getRateSeries } from "../state/summary.js";
-  import { country, dateRange } from "../state/vars.js";
+  import { getValueSeries, getRateSeries } from "../state/summary";
+  import { country, dateRange } from "../state/vars";
 
   export let dateHover;
 
@@ -118,8 +118,6 @@
         color: colorKey.activations,
       },
     ];
-
-    console.log(datasets);
   };
 
   country.subscribe(recreateDatasets);

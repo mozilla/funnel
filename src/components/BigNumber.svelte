@@ -1,7 +1,6 @@
 <script>
   import { format } from "d3-format";
   import HelpHoverable from "./HelpHoverable.svelte";
-  import { tooltip } from "./tooltip";
 
   export let label;
   export let value;
@@ -22,11 +21,6 @@
     text-align: right;
   }
 
-  .big-number--sublabel {
-    font-size: var(--text-02);
-    text-transform: uppercase;
-    color: var(--cool-gray-600);
-  }
   .big-number--label {
     font-weight: 600;
     color: var(--cool-gray-750);

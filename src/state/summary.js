@@ -26,7 +26,6 @@ export function getSummary(data, countryGroup, dateFilter) {
       }
       return true;
     });
-  console.log(filteredData);
   const summary = {
     nonFirefoxSessions: sumColumn(filteredData, "nonFxSessions"),
     downloads: sumColumn(filteredData, "nonFxDownloads"),

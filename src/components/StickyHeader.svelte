@@ -1,24 +1,28 @@
 <script>
   import { OptionMenu, Option, OptionDivider } from "@graph-paper/optionmenu";
-  import HelpHoverable from "./HelpHoverable.svelte";
   import { fade } from "svelte/transition";
+  import HelpHoverable from "./HelpHoverable.svelte";
   import {
     country,
     countryOptions,
     dateRange,
     dateRangeOptions,
-  } from "../state/vars.js";
+  } from "../state/vars";
 
   export let summary;
 
   let countrySelected;
-  country.subscribe((value) => (countrySelected = value));
+  country.subscribe((value) => {
+    countrySelected = value;
+  });
   function handleCountrySelection({ detail: { key } }) {
     country.set(key);
   }
 
   let dateSelected;
-  dateRange.subscribe((value) => (dateSelected = value));
+  dateRange.subscribe((value) => {
+    dateSelected = value;
+  });
   function handleDateRangeSelection({ detail: { key } }) {
     dateRange.set(key);
   }
@@ -36,17 +40,6 @@
     margin: 0;
     margin: auto;
     background-color: white;
-  }
-  .header-content {
-    width: 100%;
-    margin: auto;
-    display: grid;
-    grid-auto-flow: column;
-    padding-top: var(--space-2x);
-    padding-bottom: var(--space-2x);
-    padding-left: var(--space-4x);
-    padding-right: var(--space-2x);
-    border-bottom: 2px solid var(--cool-gray-150);
   }
   .date-range {
     font-weight: 200;

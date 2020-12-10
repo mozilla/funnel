@@ -64,8 +64,8 @@ export function tooltip(node, args) {
       removeEnter();
       removeLeave();
     },
-    update(args) {
-      el.textContent = args.text;
+    update(args2) {
+      el.textContent = args2.text;
     },
   };
 }

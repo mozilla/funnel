@@ -1,5 +1,4 @@
 <script>
-  import { fields } from "./config";
   import DetailGraph from "./components/DetailGraph.svelte";
   import ExecutiveSummary from "./components/ExecutiveSummary.svelte";
   import Sankey2 from "./components/Sankey2.svelte";
@@ -8,9 +7,9 @@
   import SubSectionHeader from "./components/SubSectionHeader.svelte";
   import SiteFooter from "./components/SiteFooter.svelte";
   import { fetchQueries } from "./state/queries";
-  import { feedbackLink } from "./links.js";
-  import { getSummaryDays } from "./state/summary.js";
-  import { country, dateRange } from "./state/vars.js";
+  import { feedbackLink } from "./links";
+  import { getSummaryDays } from "./state/summary";
+  import { country, dateRange } from "./state/vars";
 
   let data;
   let dateFilter;
@@ -39,11 +38,6 @@
     padding: 20px;
     border-radius: 0.25rem;
     border: 1px solid transparent;
-  }
-
-  /* use h4 for chart titles */
-  h4 {
-    margin: 0;
   }
 
   .main-content-block {

@@ -28,7 +28,6 @@ export function fetchQueries() {
           return sortBy(csvParse(csv, autoType), (d) => d.date);
         })
       );
-      console.log(res);
       return zipWith(res[0], res[1], res[2], (a, b, c) => {
         return { ...a, ...b, ...c };
       });
