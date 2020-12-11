@@ -19,7 +19,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - public
+            - public/*
   upload:
     docker:
       - image: google/cloud-sdk
@@ -28,10 +28,11 @@ jobs:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: /tmp/workspace
-      - run: ls
+      - run: ls -alh /tmp/workspace
       - gcs/gcs-rsync:
           bucket: mozilla-desktop-funnel-prototype
           source: /tmp/workspace/public
+          options: -r
 workflows:
   build-and-test:
     jobs:
