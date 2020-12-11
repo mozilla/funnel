@@ -14,6 +14,10 @@ jobs:
       - run: npm install
       - run: npm build
       - run: npm test
+  upload:
+    executor:
+      name: google/cloud-sdk
+    steps:
       - gcs/gcs-rsync:
           bucket: mozilla-desktop-funnel-prototype
           source: public
@@ -21,3 +25,6 @@ workflows:
   build-and-test:
     jobs:
       - build-and-test
+      - upload:
+          requires:
+            - build-and-test
