@@ -31,24 +31,21 @@
 
   function getCSV() {
     const keys = Object.keys(data[0]);
-    return (
-      "data:application/octet-stream," +
-      encodeURI(
-        [keys.join(",")]
-          .concat(
-            data.map((d) =>
-              keys
-                .map((k) =>
-                  d[k] instanceof Date
-                    ? d[k].toISOString()
-                    : JSON.stringify(d[k])
-                )
-                .join(",")
-            )
+    const encodedCSV = encodeURI(
+      [keys.join(",")]
+        .concat(
+          data.map((d) =>
+            keys
+              .map((k) =>
+                d[k] instanceof Date ? d[k].toISOString() : JSON.stringify(d[k])
+              )
+              .join(",")
           )
-          .join("\n")
-      )
+        )
+        .join("\n")
     );
+
+    return `data:application/octet-stream,${encodedCSV}`;
   }
 </script>
 
