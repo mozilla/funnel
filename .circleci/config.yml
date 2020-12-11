@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@2.0.1
+  gcs: t3n/gcs@0.1.3
 jobs:
   build-and-test:
     executor:
@@ -11,9 +12,34 @@ jobs:
       - node/install-packages
       - run: echo $REDASH_QUERY_JSON > queries.json
       - run: npm install
-      - run: npm build
+      - run: npm run build
       - run: npm test
+      - run: mkdir /tmp/workspace
+      - run: cp -r public /tmp/workspace
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - public/*
+  upload:
+    docker:
+      - image: google/cloud-sdk
+    working_directory: /tmp
+    steps:
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
+      - run: ls -alh /tmp/workspace
+      - gcs/gcs-rsync:
+          bucket: mozilla-desktop-funnel-prototype
+          source: /tmp/workspace/public
+          options: -r
 workflows:
   build-and-test:
     jobs:
       - build-and-test
+      - upload:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: master
