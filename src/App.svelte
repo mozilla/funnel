@@ -28,6 +28,28 @@
   function dateHover(date) {
     dateFilter = date;
   }
+
+  function getCSV() {
+    const keys = Object.keys(data[0]);
+    return (
+      "data:application/octet-stream," +
+      encodeURI(
+        [keys.join(",")]
+          .concat(
+            data.map((d) =>
+              keys
+                .map((k) =>
+                  d[k] instanceof Date
+                    ? d[k].toISOString()
+                    : JSON.stringify(d[k])
+                )
+                .join(",")
+            )
+          )
+          .join("\n")
+      )
+    );
+  }
 </script>
 
 <style>
@@ -70,6 +92,12 @@
           <a href="https://www.mozilla.org/en-US/firefox/unfck/">pages</a>,
           navigation, banners), and this dashboard currently aggregates
           downloads across all these touchpoints.
+        </p>
+        <p>
+          You can
+          <a download="numbers-that-matter.csv" href={getCSV()}>download a csv
+            copy</a>
+          of the data powering this dashboard.
         </p>
         <SubSectionHeader>mozilla.org Attributed Funnel</SubSectionHeader>
         <ExecutiveSummary {summary} />
