@@ -101,7 +101,7 @@
           "nonFxSessions",
           "new_profiles"
         ),
-        label: "New profile rate",
+        label: "First run rate",
         color: colorKey.profiles,
       },
       {
