@@ -2,7 +2,8 @@
   import Button from "@graph-paper/button/Button.svelte";
   import Documentation from "@graph-paper/icons/Documentation.svelte";
   import Slack from "./Slack.svelte";
-  import { feedbackLink, docsLink } from "../links";
+  import GitHub from "./GitHub.svelte";
+  import { feedbackLink, githubLink, docsLink } from "../links";
 </script>
 
 <style>
@@ -74,6 +75,21 @@
               var(--space-base); align-items: center;">
               <Documentation size={20} />
               Documentation
+            </span>
+          </Button>
+        </li>
+
+        <li>
+          <Button
+            on:click={() => {
+              window.open(githubLink, '_blank');
+            }}
+            level="low">
+            <span
+              style="display: grid; grid-auto-flow: column; grid-column-gap:
+              var(--space-base); align-items: center;">
+              <GitHub size={20} />
+              Source
             </span>
           </Button>
         </li>
