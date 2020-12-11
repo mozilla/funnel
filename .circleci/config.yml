@@ -12,7 +12,7 @@ jobs:
       - node/install-packages
       - run: echo $REDASH_QUERY_JSON > queries.json
       - run: npm install
-      - run: npm build
+      - run: npm run build
       - run: npm test
       - run: mkdir /tmp/workspace
       - run: cp -r public /tmp/workspace
