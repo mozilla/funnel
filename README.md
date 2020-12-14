@@ -3,9 +3,11 @@
 This GitHub repository powers a (Mozilla-internal) dashboard showing our Desktop
 acquisition funnel.
 
+The actual dashboard can be found at https://protosaur.dev/numbers-that-matter/
+
 ## Getting up and running
 
-This requires a Mozilla LDAP account and a [node.js](https://nodejs.org/)
+This requires a Mozilla LDAP account and [node.js](https://nodejs.org/)
 
 This is a two step process:
 
