@@ -7,7 +7,7 @@
   } from "d3-sankey";
   import { fade, fly } from "svelte/transition";
   import { colorKey } from "./ColorKey";
-  import HelpHoverable from "./HelpHoverable.svelte";
+  import ChartHeader from "./ChartHeader.svelte";
   import { getSummary } from "../state/summary";
   import { country } from "../state/vars";
 
@@ -162,23 +162,12 @@
     font-family: var(--font--viz);
     font-size: 0.7em;
   }
-  .chart-header {
-    display: grid;
-    gap: 4px;
-    grid-auto-flow: column;
-    justify-content: left;
-    align-content: center;
-    font-size: var(--text-04);
-    color: var(--cool-gray-750);
-    padding-bottom: var(--space-2x);
-  }
 </style>
 
-<div class="chart-header">
-  Funnel Overview
-  <HelpHoverable
-    description={'Outlines aggregate flow of users reaching the next milestone in the funnel. Percentages at each milestone is out of the total funnel population (Visitors), not of the previous stage in the funnel.'} />
-</div>
+<ChartHeader
+  title="Funnel Overview"
+  description="Outlines aggregate flow of users reaching the next milestone in the funnel. Percentages at each milestone is out of the total funnel population (Visitors), not of the previous stage in the funnel." />
+
 {#if sankey}
   <svg in:fly={{ duration: 500, y: -10 }} width="900" height="320">
     {#each sankey.links as link}

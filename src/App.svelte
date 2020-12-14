@@ -6,22 +6,20 @@
   import StickyHeader from "./components/StickyHeader.svelte";
   import SubSectionHeader from "./components/SubSectionHeader.svelte";
   import SiteFooter from "./components/SiteFooter.svelte";
-  import { fetchQueries } from "./state/queries";
+  import { fetchQueries, queryData } from "./state/queries";
   import { feedbackLink } from "./links";
   import { getSummaryDays } from "./state/summary";
   import { country, dateRange } from "./state/vars";
 
-  let data;
   let dateFilter;
   let summary;
 
-  fetchQueries().then((rs) => {
-    data = rs;
+  fetchQueries().then(() => {
     dateRange.subscribe((value) => {
-      summary = getSummaryDays(data, $country, value);
+      summary = getSummaryDays($queryData, $country, value);
     });
     country.subscribe((value) => {
-      summary = getSummaryDays(data, value, $dateRange);
+      summary = getSummaryDays($queryData, value, $dateRange);
     });
   });
 
@@ -70,7 +68,7 @@
 <main>
   <div class="surface surface--border-radius--1" style="height:100%">
     <div class="main-content-block content-block">
-      {#if data}
+      {#if $queryData && summary}
         <StickyHeader {summary} />
         <div class="warning">
           While the data in this visualization has undergone a preliminary
@@ -100,10 +98,10 @@
         <ExecutiveSummary {summary} />
         <SubSectionHeader>Details</SubSectionHeader>
         <div class="content-element">
-          <Sankey2 {summary} {data} {dateFilter} />
+          <Sankey2 {summary} data={$queryData} {dateFilter} />
         </div>
         <div class="content-element">
-          <DetailGraph {data} {dateHover} />
+          <DetailGraph data={$queryData} {dateHover} />
         </div>
       {/if}
     </div>
