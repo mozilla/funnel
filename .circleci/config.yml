@@ -41,6 +41,11 @@ jobs:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: /tmp/workspace
+      - gcs/gcs-rsync:
+          bucket: mozilla-desktop-funnel-prototype
+          source: /tmp/workspace/public
+          destination: "preview/$CIRCLE_BRANCH"
+          options: -r
       # shamelessly cribbed from https://circleci.com/developer/orbs/orb/samsalisbury/github-status
       - run: |
           set -euo pipefail
@@ -56,7 +61,7 @@ jobs:
           BODY='
             {
               "state": "success",
-              "target_url": "https://protosaur.dev/numbers-that-matter/previews/'$CIRCLE_BRANCH'",
+              "target_url": "https://protosaur.dev/numbers-that-matter/preview/'$CIRCLE_BRANCH'/",
               "description": "Deploy Preview",
               "context": "'$CONTEXT'"
             }
