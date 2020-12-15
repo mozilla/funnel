@@ -33,10 +33,51 @@ jobs:
           bucket: mozilla-desktop-funnel-prototype
           source: /tmp/workspace/public
           options: -r
+  deploy-preview:
+    docker:
+      - image: google/cloud-sdk
+    working_directory: /tmp
+    steps:
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
+      - gcs/gcs-rsync:
+          bucket: mozilla-desktop-funnel-prototype
+          source: /tmp/workspace/public
+          destination: "preview/$CIRCLE_BRANCH"
+          options: -r
+      # shamelessly cribbed from https://circleci.com/developer/orbs/orb/samsalisbury/github-status
+      - run: |
+          set -euo pipefail
+          CONTEXT="circleci/$CIRCLE_JOB"
+          # Compose our URL and auth pieces
+          API=https://api.github.com
+          USER=$CIRCLE_PROJECT_USERNAME
+          REPO=$CIRCLE_PROJECT_REPONAME
+          SHA=$CIRCLE_SHA1
+          AUTH=$GITHUB_STATUS_USER:$GITHUB_STATUS_TOKEN
+          URL=$API/repos/$USER/$REPO/statuses/$SHA
+          # Compose the body.
+          BODY='
+            {
+              "state": "success",
+              "target_url": "https://protosaur.dev/numbers-that-matter/preview/'$CIRCLE_BRANCH'/",
+              "description": "Deploy Preview",
+              "context": "'$CONTEXT'"
+            }
+          '
+          # Post the status (use echo-pipe not \<<< for greater shell compat).
+          echo $BODY | curl -u $AUTH -XPOST -d@- $URL
 workflows:
   build-and-test:
     jobs:
       - build-and-test
+      - deploy-preview:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              ignore: main
       - upload:
           requires:
             - build-and-test
