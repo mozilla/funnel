@@ -1,6 +1,9 @@
+import { writable } from "svelte/store";
 import { autoType, csvParse } from "d3-dsv";
 import { sortBy, zipWith } from "lodash";
 import queries from "../../queries.json";
+
+export const queryData = writable(undefined);
 
 export function fetchQueries() {
   return Promise.all(queries.map((rq) => fetch(rq))).then(async (responses) => {
@@ -10,8 +13,10 @@ export function fetchQueries() {
         return sortBy(csvParse(csv, autoType), (d) => d.date);
       })
     );
-    return zipWith(res[0], res[1], res[2], (a, b, c) => {
-      return { ...a, ...b, ...c };
-    });
+    queryData.set(
+      zipWith(res[0], res[1], res[2], (a, b, c) => {
+        return { ...a, ...b, ...c };
+      })
+    );
   });
 }

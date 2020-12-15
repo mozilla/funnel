@@ -21,6 +21,13 @@
     text-align: right;
   }
 
+  .big-number--title {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 4px;
+    justify-content: end;
+  }
+
   .big-number--label {
     font-weight: 600;
     color: var(--cool-gray-750);
@@ -40,8 +47,8 @@
 </style>
 
 <div class="big-number">
-  <div class="big-number--label">
-    {label}
+  <div class="big-number--title">
+    <div class="big-number--label">{label}</div>
     {#if description}
       <HelpHoverable {description} />
     {/if}

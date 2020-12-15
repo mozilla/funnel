@@ -61,6 +61,13 @@
     z-index: 10;
   }
 
+  .section-header__text {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 4px;
+    align-items: center;
+  }
+
   .menus {
     display: grid;
     align-content: center;
