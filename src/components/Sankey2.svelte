@@ -166,7 +166,8 @@
 
 <ChartHeader
   title="Funnel Overview"
-  description="Outlines aggregate flow of users reaching the next milestone in the funnel. Percentages at each milestone is out of the total funnel population (Visitors), not of the previous stage in the funnel." />
+  description="Outlines aggregate flow of users reaching the next milestone in the funnel. Percentages at each milestone is out of the total funnel population (Visitors), not of the previous stage in the funnel."
+  dateGuide={dateFilter} />
 
 {#if sankey}
   <svg in:fly={{ duration: 500, y: -10 }} width="900" height="320">

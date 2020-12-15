@@ -7,14 +7,14 @@
   import SubSectionHeader from "./components/SubSectionHeader.svelte";
   import SiteFooter from "./components/SiteFooter.svelte";
   import { fetchQueries, queryData } from "./state/queries";
+  import { fetchReleases } from "./state/releases";
   import { feedbackLink } from "./links";
   import { getSummaryDays } from "./state/summary";
   import { country, dateRange } from "./state/vars";
 
   let dateFilter;
   let summary;
-
-  fetchQueries().then(() => {
+  Promise.all([fetchReleases(), fetchQueries()]).then(() => {
     dateRange.subscribe((value) => {
       summary = getSummaryDays($queryData, $country, value);
     });
@@ -101,7 +101,7 @@
           <Sankey2 {summary} data={$queryData} {dateFilter} />
         </div>
         <div class="content-element">
-          <DetailGraph data={$queryData} {dateHover} />
+          <DetailGraph {dateHover} />
         </div>
       {/if}
     </div>

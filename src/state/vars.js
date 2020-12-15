@@ -9,6 +9,14 @@ export const dateRangeOptions = [
     key: 28,
     label: "Previous 28 Days",
   },
+  {
+    key: 56,
+    label: "Previous 56 Days",
+  },
+  {
+    key: 84,
+    label: "Previous 84 Days",
+  },
 ];
 
 export const dateRange = writable(dateRangeOptions[1].key);

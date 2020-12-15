@@ -12,6 +12,7 @@
   import MetricMouseover from "./MetricMouseover.svelte";
   import { colorKey } from "./ColorKey";
   import { queryData } from "../state/queries";
+  import { releaseData } from "../state/releases";
   import { getValueSeries, getRateSeries } from "../state/summary";
   import { country, dateRange } from "../state/vars";
 
@@ -27,6 +28,7 @@
 
   let datasets = [];
   let rateDatasets = [];
+  let releaseAnnotations = [];
 
   const recreateDatasets = () => {
     datasets = [
@@ -120,6 +122,9 @@
         color: colorKey.activations,
       },
     ];
+    releaseAnnotations = $releaseData.filter(
+      (r) => r.date >= datasets[0].data[0].date
+    );
   };
 
   country.subscribe(recreateDatasets);
@@ -149,7 +154,7 @@
   <Stack>
     <ChartHeader
       title="Numbers"
-      dateGuide={mousePosition2}
+      dateGuide={mousePosition2 && mousePosition2.x}
       description={'Aggregate counts of each funnel milestone per day. This allows us to understand how the funnel is changing over time. Note: the number of users entering our funnel has high day-of-week seasonality, meaning the volume dips on weekends, and spikes on weekdays. This is normal and expected.'} />
     <DataGraphic
       xMin={datasets[0].data[0].date}
@@ -174,6 +179,12 @@
           {size}
           {dashArray} />
       {/each}
+      {#each releaseAnnotations as releaseAnnotation}
+        <Marker location={releaseAnnotation.date}>
+          {releaseAnnotation.version}
+        </Marker>
+      {/each}
+
       <g slot="annotation" let:xScale let:top let:bottom>
         <HorizontalWindow {datasets} value={mousePosition2.x} let:output>
           {#if mousePosition2.x}
@@ -187,7 +198,7 @@
   <Stack>
     <ChartHeader
       title="Rates"
-      dateGuide={mousePosition2}
+      dateGuide={mousePosition2 && mousePosition2.x}
       description={'Percentages of each funnel milestone per day. “Of all the visitors for that day, how many reached <X> milestone for that day?”'} />
     <DataGraphic
       xMin={datasets[0].data[0].date}
@@ -212,6 +223,11 @@
           color={dataset.color}
           {size}
           {dashArray} />
+      {/each}
+      {#each releaseAnnotations as releaseAnnotation}
+        <Marker location={releaseAnnotation.date}>
+          {releaseAnnotation.version}
+        </Marker>
       {/each}
       <g slot="annotation" let:xScale let:top let:bottom>
         <HorizontalWindow
