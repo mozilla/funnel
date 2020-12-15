@@ -1,6 +1,5 @@
 <script>
   import { format } from "d3-format";
-  import ChartHeader from "./ChartHeader.svelte";
   import HelpHoverable from "./HelpHoverable.svelte";
 
   export let label;

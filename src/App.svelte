@@ -28,11 +28,11 @@
   }
 
   function getCSV() {
-    const keys = Object.keys(data[0]);
+    const keys = Object.keys($queryData[0]);
     const encodedCSV = encodeURI(
       [keys.join(",")]
         .concat(
-          data.map((d) =>
+          $queryData.map((d) =>
             keys
               .map((k) =>
                 d[k] instanceof Date ? d[k].toISOString() : JSON.stringify(d[k])

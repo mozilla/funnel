@@ -1,13 +1,11 @@
 <script>
   import { format } from "d3-format";
-  import { timeFormat } from "d3-time-format";
   import { DataGraphic } from "@graph-paper/datagraphic";
   import { Line } from "@graph-paper/elements";
   import { Marker, LeftAxis, BottomAxis } from "@graph-paper/guides";
   import { Stack } from "@graph-paper/stack";
   import { Tiles } from "@graph-paper/tiles";
   import ChartHeader from "./ChartHeader.svelte";
-  import HelpHoverable from "./HelpHoverable.svelte";
   import HorizontalWindow from "./HorizontalWindow.svelte";
   import MetricMouseover from "./MetricMouseover.svelte";
   import { colorKey } from "./ColorKey";
@@ -24,7 +22,6 @@
   export let curve = "curveMonotoneX";
   export let dashArray = "1,0";
   let mousePosition2;
-  let output;
 
   let datasets = [];
   let rateDatasets = [];
@@ -136,19 +133,6 @@
     }
   }
 </script>
-
-<style>
-  .chart-header {
-    display: grid;
-    height: 80px;
-    gap: 4px;
-    grid-auto-flow: column;
-    justify-content: left;
-    align-content: center;
-    font-size: var(--text-04);
-    color: var(--cool-gray-750);
-  }
-</style>
 
 <Tiles>
   <Stack>
