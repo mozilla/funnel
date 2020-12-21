@@ -1,13 +1,8 @@
-import { isDate, max, sum } from "lodash";
+import { isDate, isNumber, max, sum } from "lodash";
+import { dateDifference, getMinDate, getMaxDate, subtractDays } from "./etl";
 
 function sumColumn(data, valColName) {
   return sum(data.map((ni) => ni[valColName]));
-}
-
-function subtractDays(date, numDays) {
-  const newDate = new Date(date);
-  newDate.setDate(date.getDate() - numDays);
-  return newDate;
 }
 
 export function getSummary(data, countryGroup, dateFilter) {
@@ -44,30 +39,55 @@ export function getSummary(data, countryGroup, dateFilter) {
 }
 
 export function getSummaryDays(data, countryGroup, range) {
-  const latestDate = max(data.map((d) => d.date));
-  const dateFilterLatest = {
-    start: subtractDays(latestDate, range),
-    end: new Date(latestDate),
-  };
-  const dateFilterPrevious = {
-    start: subtractDays(latestDate, range * 2 - 1),
-    end: subtractDays(latestDate, range - 1),
-  };
+  let dateFilterLatest;
+  let dateFilterPrevious;
+  let daysInRange;
 
+  if (isNumber(range)) {
+    daysInRange = range;
+
+    const latestDate = getMaxDate(data);
+    dateFilterLatest = {
+      start: subtractDays(latestDate, range),
+      end: new Date(latestDate),
+    };
+    dateFilterPrevious = {
+      start: subtractDays(latestDate, range * 2 - 1),
+      end: subtractDays(latestDate, range - 1),
+    };
+  } else {
+    dateFilterLatest = range;
+    daysInRange = dateDifference(range.end, range.start);
+    dateFilterPrevious = {
+      start: subtractDays(range.start, daysInRange),
+      end: subtractDays(range.start, 1),
+    };
+  }
   return {
-    range,
+    daysInRange,
     currentRange: dateFilterLatest,
     previousRange: dateFilterPrevious,
     current: getSummary(data, countryGroup, dateFilterLatest),
-    previous: getSummary(data, countryGroup, dateFilterPrevious),
+    previous:
+      dateFilterPrevious.start >= getMinDate(data)
+        ? getSummary(data, countryGroup, dateFilterPrevious)
+        : undefined,
   };
 }
 
 export function getValueSeries(data, countryGroup, dateRange) {
-  const latestDate = max(data.map((d) => d.date));
-  const startDate = subtractDays(latestDate, dateRange);
+  if (isNumber(dateRange)) {
+    const latestDate = max(data.map((d) => d.date));
+    const startDate = subtractDays(latestDate, dateRange);
+    return data.filter(
+      (d) => d.country_group === countryGroup && d.date >= startDate
+    );
+  }
   return data.filter(
-    (d) => d.country_group === countryGroup && d.date >= startDate
+    (d) =>
+      d.country_group === countryGroup &&
+      d.date >= dateRange.start &&
+      d.date <= dateRange.end
   );
 }
 

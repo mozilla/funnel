@@ -1,7 +1,12 @@
 <script>
   import { OptionMenu, Option, OptionDivider } from "@graph-paper/optionmenu";
   import { fade } from "svelte/transition";
+  import { utcFormat } from "d3-time-format";
+  import { isNumber } from "lodash";
   import HelpHoverable from "./HelpHoverable.svelte";
+  import TimeSelector from "./TimeSelector.svelte";
+  import { getMaxDate } from "../state/etl";
+  import { queryData } from "../state/queries";
   import {
     country,
     countryOptions,
@@ -9,7 +14,8 @@
     dateRangeOptions,
   } from "../state/vars";
 
-  export let summary;
+  const LABEL_FORMAT = "%b %d, %Y";
+  const formatLabel = utcFormat(LABEL_FORMAT);
 
   let countrySelected;
   country.subscribe((value) => {
@@ -19,11 +25,40 @@
     country.set(key);
   }
 
-  let dateSelected;
+  let selectedDateKey;
+  let visibleDateRangeOptions;
+  let timeSelectorOpen = false;
+
+  function timeSelectorClosed() {
+    timeSelectorOpen = false;
+  }
+
   dateRange.subscribe((value) => {
-    dateSelected = value;
+    if (isNumber(value)) {
+      selectedDateKey = value;
+      visibleDateRangeOptions = [
+        ...dateRangeOptions,
+        { label: "Custom...", key: -1 },
+      ];
+    } else {
+      selectedDateKey = 0;
+      visibleDateRangeOptions = [
+        {
+          label: `${formatLabel(value.start)} - ${formatLabel(value.end)}`,
+          key: 0,
+        },
+        ...dateRangeOptions,
+        { label: "Custom...", key: -1 },
+      ];
+    }
   });
   function handleDateRangeSelection({ detail: { key } }) {
+    if (key <= 0) {
+      if (key === -1) {
+        timeSelectorOpen = true;
+      }
+      return;
+    }
     dateRange.set(key);
   }
   const dateFormat = new Intl.DateTimeFormat([], {
@@ -83,17 +118,20 @@
         <span>Numbers that Matter</span>
         <span in:fade={{ duration: 1500 }} class="date-range">
           Updated
-          {dateFormat.format(summary.currentRange.end)}
+          {dateFormat.format(getMaxDate($queryData))}
         </span>
         <HelpHoverable
           description="Results updated every Monday, a week behind so 7 day activation can be calculated." />
       </div>
       <div class="menus">
         <OptionMenu on:selection={handleDateRangeSelection}>
-          {#each dateRangeOptions as { key, label }, i (key)}
-            <Option {key} {label} selected={dateSelected === key} />
+          {#each visibleDateRangeOptions as { key, label }}
+            <Option {key} {label} selected={selectedDateKey === key} />
           {/each}
         </OptionMenu>
+        <TimeSelector
+          isOpen={timeSelectorOpen}
+          on:closed={timeSelectorClosed} />
         <OptionMenu
           on:selection={handleCountrySelection}
           options={countryOptions}>

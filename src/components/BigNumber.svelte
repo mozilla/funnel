@@ -54,5 +54,7 @@
     {/if}
   </div>
   <div class="big-number--number">{format(',')(value)}</div>
-  <div class="big-number--compare">{compareStr}</div>
+  <div class="big-number--compare">
+    {compare ? compareStr : 'Insufficient data for comparison'}
+  </div>
 </div>
