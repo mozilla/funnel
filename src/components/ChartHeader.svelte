@@ -1,5 +1,5 @@
 <script>
-  import { timeFormat } from "d3-time-format";
+  import { utcFormat } from "d3-time-format";
   import HelpHoverable from "./HelpHoverable.svelte";
 
   export let title;
@@ -30,6 +30,6 @@
   <div>{title}</div>
   <HelpHoverable {description} />
   <div class="date-text">
-    {#if dateGuide}{timeFormat('%b %d %Y')(dateGuide)}{/if}
+    {#if dateGuide}{utcFormat('%b %d %Y')(dateGuide)}{/if}
   </div>
 </div>
