@@ -1,4 +1,5 @@
 <script>
+  import { min, max } from "lodash";
   import { utcFormat } from "d3-time-format";
   import { createEventDispatcher } from "svelte";
   import Button from "@graph-paper/button/Button.svelte";
@@ -47,8 +48,11 @@
       id="startDate"
       class="form-control"
       bind:value={startDate}
-      min={utcFormat('%Y-%M-%D')(getMinDate($queryData))}
-      max={subtractDays(getMaxDate($queryData), 1)}
+      min={utcFormat('%Y-%m-%d')(getMinDate($queryData))}
+      max={min([
+        utcFormat('%Y-%m-%d')(subtractDays(new Date(endDate), 1)),
+        utcFormat('%Y-%m-%d')(subtractDays(getMaxDate($queryData), 1)),
+      ])}
       required />
   </div>
   <div class="form-group">
@@ -57,8 +61,11 @@
       id="endDate"
       class="form-control"
       bind:value={endDate}
-      min={addDays(getMinDate($queryData), 1)}
-      max={utcFormat('%Y-%M-%D')(getMaxDate($queryData))}
+      min={max([
+        startDate,
+        utcFormat('%Y-%m-%d')(addDays(getMinDate($queryData), 1)),
+      ])}
+      max={utcFormat('%Y-%m-%d')(getMaxDate($queryData))}
       required />
   </div>
   <div class="button-list">
