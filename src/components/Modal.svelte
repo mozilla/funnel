@@ -1,11 +1,14 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
   import { Close } from "@graph-paper/icons";
 
   export let isOpen = false;
 
+  const dispatch = createEventDispatcher();
+
   const close = () => {
-    isOpen = false;
+    dispatch("closed");
   };
 
   const keydown = (e) => {

@@ -16,6 +16,10 @@
     dateRange.set({ start: new Date(startDate), end: new Date(endDate) });
     dispatch("closed");
   }
+
+  function closed() {
+    dispatch("closed");
+  }
 </script>
 
 <style>
@@ -35,7 +39,7 @@
   }
 </style>
 
-<Modal {isOpen}>
+<Modal {isOpen} on:closed={closed}>
   <div slot="title">Custom Date Range</div>
   <div class="form-group">
     <label for="startDate" class="">Start Date</label><input
@@ -60,7 +64,7 @@
   <div class="button-list">
     <Button
       on:click={() => {
-        isOpen = false;
+        dispatch('closed');
       }}
       level="low">
       Cancel
