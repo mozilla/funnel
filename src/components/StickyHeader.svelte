@@ -121,7 +121,7 @@
           {dateFormat.format(getMaxDate($queryData))}
         </span>
         <HelpHoverable
-          description="Results updated every Monday, a week behind so 7 day activation can be calculated." />
+          description="Results updated daily, a week behind so 7 day activation can be calculated." />
       </div>
       <div class="menus">
         <OptionMenu on:selection={handleDateRangeSelection}>
