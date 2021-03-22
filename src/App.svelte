@@ -71,8 +71,11 @@
       {#if $queryData && summary}
         <StickyHeader {summary} />
         <div class="warning">
-          The installation counts are under-reported from March 11th to March 20th due to
-          missing data for stub installers. Data ops is investigating in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1699645">Bug 1699645</a>.
+          The installation counts are under-reported from March 11th to March
+          20th due to missing data for stub installers. Data ops is
+          investigating in
+          <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1699645">
+            Bug 1699645</a>.
         </div>
         <p>
           This dashboard models the user journey of new Firefox (desktop) users
@@ -90,8 +93,7 @@
           While the data in this visualization has undergone a preliminary
           validation, the presentation is still very much in flux.
           <a href={feedbackLink} target="blank_">Feedback</a>
-          (and questions!) are welcome.
-          You can
+          (and questions!) are welcome. You can
           <a download="numbers-that-matter.csv" href={getCSV()}>download a csv
             copy</a>
           of the data powering this dashboard.
