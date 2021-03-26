@@ -70,13 +70,6 @@
     <div class="main-content-block content-block">
       {#if $queryData && summary}
         <StickyHeader {summary} />
-        <div class="warning">
-          The installation counts are under-reported from March 11th to March
-          20th due to missing data for stub installers. Data ops is
-          investigating in
-          <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1699645">
-            Bug 1699645</a>.
-        </div>
         <p>
           This dashboard models the user journey of new Firefox (desktop) users
           acquired from mozilla.org. It is restricted to mozilla.org visits and
