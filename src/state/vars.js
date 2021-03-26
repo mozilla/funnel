@@ -41,6 +41,7 @@ export const countryOptions = [
   { key: "CA", label: "Canada" },
   { key: "MX", label: "Mexico" },
   { key: "BR", label: "Brazil" },
+  { key: "CN", label: "China" },
 ];
 
 export const country = writable(countryOptions[0].key);
