@@ -70,6 +70,13 @@
     <div class="main-content-block content-block">
       {#if $queryData && summary}
         <StickyHeader {summary} />
+        <div class="warning">
+          This dashboard will be shut off on September 30th 2021. Please use the
+          new
+          <a href="https://mozilla.cloud.looker.com/dashboards-next/66">
+            Desktop Numbers that Matter Looker dashboard</a>
+          instead.
+        </div>
         <p>
           This dashboard models the user journey of new Firefox (desktop) users
           acquired from mozilla.org. It is restricted to mozilla.org visits and
